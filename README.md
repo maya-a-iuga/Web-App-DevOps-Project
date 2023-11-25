@@ -49,7 +49,41 @@ To run the application, you simply need to run the `app.py` script in this repos
 
 ## Containerisation with Docker
 
-###
+1. **Creating the Dockerfile**
+I created a Dockerfile containing the instructions for building the Docker image for this project.
+Refer to the [Dockerfile](./Dockerfile) for more detail.
+
+2. **Building Docker Image**
+
+```
+docker build -t web-app-devops-project .
+```
+Using the created Dockerfile, I built the Docker image using the command above in the same directory as the Dockerfile.
+
+3. **Tagging Docker Image**
+
+```
+docker tag web-app-devops-project jasongrg1/web-app-devops-project:1.0
+```
+I then tagged the created docker image with my username and an appropriate version tag.
+
+4. **Pushing to Docker Hub**
+
+```
+docker push jasongrg1/web-app-devops-project:1.0
+```
+I then uploaded the tagged Docker image to Docker Hub.
+
+5. **Pull image from Docker Hub**
+
+```
+docker pull jasongrg1/web-app-devops-project:1.0
+```
+The Docker image can now be pulled from Docker Hub and is accessible.
+```
+docker run -p 5000:5000 web-app-devops-project:1.0
+```
+The container is ran using the command above. The -p flag is used to map port 5000 from the local machine to port 5000 in the container. The application works as expected within the containerized environment. The URL http://127.0.0.1:5000 is used to interact with the application.
 
 ## Technology Stack
 
