@@ -1,0 +1,4 @@
+# Ignore terraform created files
+.terraform/
+.terraform.lock.hcl
+.DS_Store
