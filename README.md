@@ -116,11 +116,11 @@ one to allow traffic to the kube-apiserver and the other to allow inbound SSH tr
 3. **Defining Output Variables**
 The following output variables are defined inside the outputs.tf configuration file:
 
-- vnet_id
-- control_plane_subnet_id 
-- worker_node_subnet_id
-- networking_resource_group_name
-- aks_nsg_id
+- vnet_id - used within the cluster module to connect the cluster to the defined VNet.
+- control_plane_subnet_id - used to specify the subnet where the control plane components of the AKS cluster will be deployed to.
+- worker_node_subnet_id - used to specify the subnet where the worker nodes of the AKS cluster will be deployed to.
+- networking_resource_group_name - used to ensure the cluster module resources are provisioned within the same resource group.
+- aks_nsg_id - used to associate the NSG with the AKS cluster for security rule enforcement and traffic filtering.
 
 
 4. **Initialising Network Module**
