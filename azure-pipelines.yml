@@ -5,7 +5,11 @@
 
 trigger:
 <<<<<<< HEAD
+<<<<<<< HEAD
 - secrets-feature
+=======
+- main
+>>>>>>> parent of f79caf6 (updates repo with files needed for students)
 =======
 - main
 >>>>>>> parent of f79caf6 (updates repo with files needed for students)
@@ -15,6 +19,7 @@ pool:
 
 steps:
 <<<<<<< HEAD
+<<<<<<< HEAD
 - script: echo Hello, world!
   displayName: 'Run a one-line script'
 
@@ -23,6 +28,8 @@ steps:
     echo See https://aka.ms/yaml
   displayName: 'Run a multi-line script'
 =======
+=======
+>>>>>>> parent of f79caf6 (updates repo with files needed for students)
 - task: Docker@2
   inputs:
     containerRegistry: 'Docker Hub'
@@ -38,5 +45,9 @@ steps:
     azureSubscriptionConnection: 'aks-service-connection'
     azureResourceGroup: 'aks-rg'
     kubernetesCluster: 'aks-demo'
+<<<<<<< HEAD
+    manifests: 'deployment.yaml'
+>>>>>>> parent of f79caf6 (updates repo with files needed for students)
+=======
     manifests: 'deployment.yaml'
 >>>>>>> parent of f79caf6 (updates repo with files needed for students)
