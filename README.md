@@ -115,6 +115,7 @@ Within the NSG, two inbound rules are defined:
 one to allow traffic to the kube-apiserver and the other to allow inbound SSH traffic.
 
 3. **Defining Output Variables**
+
 The following output variables are defined inside the outputs.tf configuration file:
 
 - vnet_id - used within the cluster module to connect the cluster to the defined VNet.
@@ -130,7 +131,6 @@ The following output variables are defined inside the outputs.tf configuration f
    cd web-app-aks-terraform/networking-module
    terraform init
 ```
-
 I initialize the networking module to ensure it is ready to use within the main project using the command above.
 
 ## Defining AKS Cluster with IaC
@@ -142,7 +142,43 @@ I initialize the networking module to ensure it is ready to use within the main 
     - `variables.tf`
   - `networking-module/`
 
+1. **Defining Input Variables**
 
+The following input variables are defined inside the variables.tf configuration file:
+
+- aks_cluster_name - represents the name of the AKS cluster.
+- cluster_location - specifies the Azure region where the AKS cluster will be deployed to.
+- dns_prefix - defines the DNS prefix of cluster.
+- kubernetes_version - specifies which Kubernetes version the cluster will use.
+- service_principal_client_id - provides the Client ID for the service principal associated with the cluster.
+- service_principal_secret - supplies the Client Secret for the service principal.
+
+Additionally, the output variables from the networking module are added as input variables for this module:
+
+- resource_group_name
+- vnet_id
+- control_plane_subnet_id
+- worker_node_subnet_id
+
+2. **Defining Cluster Resources**
+
+In the main.tf configuration file, there is code for creating an AKS cluster with specified configurations. The input variables defined in variables.tf are used to specify necessary arguments. In addition, configurations 'default_node_pool' and 'service_principal' are used for specific settings within the AKS cluster.
+
+
+3. **Defining Output Variables**
+
+The following output variables are defined inside the outputs.tf configuration file:
+- aks_cluster_name - store the name of the provisioned cluster
+- aks_cluster_id - store the ID of the cluster
+- aks_kubeconfig - capture the Kubernetes configuration file of the cluster which is needed for interacting with and managing the AKS cluster using kubectl.
+
+4. **Initialising Cluster Module**
+
+```bash
+   cd web-app-aks-terraform/aks-cluster-module
+   terraform init
+```
+I initialize the cluster module to ensure it is ready to use within the main project using the command above.
 
 ## Technology Stack
 
