@@ -42,10 +42,10 @@ variable "vnet_id" {
   type        = string
 }
 
-#variable "aks_nsg_id" {
-#  description = "ID of the Network Security Group (NSG) for AKS."
-#  type        = string
-#}
+variable "aks_nsg_id" {
+  description = "ID of the Network Security Group (NSG) for AKS."
+  type        = string
+}
 
 variable "control_plane_subnet_id" {
   description = "ID of the control plane subnet."
