@@ -1,4 +1,4 @@
-# Web-App-DevOps-Project
+m# Web-App-DevOps-Project
 
 Welcome to the Web App DevOps Project repo! This application allows you to efficiently manage and track orders for a potential business. It provides an intuitive user interface for viewing existing orders and adding new ones.
 
@@ -222,6 +222,53 @@ There are also input variables referencing outputs from the networking module:
 - control_plane_subnet_id
 - worker_node_subnet_id
 - aks_nsg_id 
+
+## Kubernetes Deployment to AKS 
+
+- **Deployment Manifest**
+
+The application is specified to concurrently run on two replicas within the AKS cluster, allowing for scalability and high availability.
+The manifest is configured to point to the docker image created [earlier](#containerisation-with-docker) to house the application. This ensures that the correct container image is utilized for deployment.
+
+- **Service Manifest**
+
+The service is configured to use the TCP protocol on port 80 for internal communication within the cluster. The targetPort is set to 5000, which corresponds to the port exposed by your container.
+
+The service type is set to ClusterIP, designating it as an internal service within the AKS cluster.
+
+- **Deployment Strategy**
+
+The chosen deployment strategy for this project is Rolling Update. This strategy involves updating instances one at a time gradually. During updates, a maximum of one pod deploys while one pod becomes temporarily unavailable. As a result, there is minimal downtime to users making this suitable for the application.
+
+Dealing with issues is straight forward by reverting back to a previous version. Overall, this strategy allows the application's requirement of continuous availability to be met.
+
+- **Testing and Validation**
+These are the tests I have conducted to ensure the functionality and reliability of the application.
+
+```
+kubectl get pods
+```
+This command is used to check the status of the pods. All the pods should be in the 'Running' state and have no restarts.
+
+```
+kubectl get svc
+```
+This command is used to receive information about the services. This can be used to confirm that the services have the correct service type. The ports and IP addresses can also be checked.
+
+```
+kubectl port-forward <pod-name> 5000:5000
+```
+This command is used to test connectivity and interact with the application. The AKS cluster can be accessed at http://127.0.0.1:5000 to test functionality.
+
+- **Application Distribution**
+
+I plan to distribute the application to other internal users within my organisation using Helm. This is a Kubernetes package manager that simplifies the deployment and management of Kubernetes applications.
+
+<!-- Describe the steps and mechanisms you would use to make the application accessible to team members. Additionally, discuss how you would share the application with external users if the need arises. Highlight any considerations or additional steps required to provide external access securely. -->
+
+
+
+Helm repositories allow organizations to share and distribute Helm charts easily. By packaging applications into Helm charts and hosting them in repositories, teams can ensure consistent deployment practices and share their applications with others, fostering collaboration and knowledge sharing.
 
 ## Technology Stack
 
