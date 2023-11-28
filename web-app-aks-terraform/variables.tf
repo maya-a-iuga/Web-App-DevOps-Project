@@ -19,6 +19,6 @@ variable "tenant_id" {
 }
 
 variable "public_ip_address" {
-  description = "The public IP address for the networking resources."
+  description = "The public IP address allowed for inbound rules."
   type        = string
 }
