@@ -180,6 +180,49 @@ The following output variables are defined inside the outputs.tf configuration f
 ```
 I initialize the cluster module to ensure it is ready to use within the main project using the command above.
 
+## Creating AKS Cluster with IaC
+
+- `web-app-aks-terraform/`
+  - `main.tf`
+  - `aks-cluster-module/`
+  - `networking-module/`
+
+The cluster is created in the main configuration file.
+
+1. **Provider Setup**
+
+The required provider is called "azurerm" and it is configured with necessary details to authenticate and interact with Azure resources. These details for identification include:
+  - client_id
+  - client_secret
+  - subscription_id
+  - tenant_id
+
+2. **Networking Module Integration**
+
+The networking module is instantiated in the main.tf using the code from [Defining Networking Services with IaC](#defining-networking-services-with-iac). The values needed for the input variable required by the networking module are provided here. The variables include: 
+
+- resource_group_name
+- location
+- vnet_address_space
+
+3. **Cluster Module Integration**
+
+The cluster module is also instantiated in the main.tf using the code from [Defining AKS Cluster with IaC](#defining-aks-cluster-with-iac). The values needed for the input variable required by the cluster module are provided here. The variables include: 
+
+- aks_cluster_name
+- cluster_location
+- dns_prefix
+- kubernetes_version
+- service_principal_client_id
+- service_principal_client_secret
+
+There are also input variables referencing outputs from the networking module:
+- resource_group_name
+- vnet_id
+- control_plane_subnet_id
+- worker_node_subnet_id
+- aks_nsg_id 
+
 ## Technology Stack
 
 - **Backend:** Flask is used to build the backend of the application, handling routing, data processing, and interactions with the database.
