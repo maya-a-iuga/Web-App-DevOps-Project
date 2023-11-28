@@ -22,7 +22,7 @@ module "networking" {
   resource_group_name = "networking-resource-group"
   location           = "UK South"
   vnet_address_space = ["10.0.0.0/16"]
-  public_ip_address = "90.211.142.186"
+  public_ip_address = var.public_ip_address
 
   # Define more input variables as needed...
 }

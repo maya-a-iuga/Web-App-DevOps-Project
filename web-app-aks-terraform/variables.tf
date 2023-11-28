@@ -17,3 +17,8 @@ variable "tenant_id" {
   description = "Azure AD tenant ID"
   type        = string
 }
+
+variable "public_ip_address" {
+  description = "The public IP address for the networking resources."
+  type        = string
+}
