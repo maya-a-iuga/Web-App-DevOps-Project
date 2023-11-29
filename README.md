@@ -22,7 +22,7 @@ Welcome to the Web App DevOps Project repo! This application allows you to effic
   
 ![Screenshot 2023-08-31 at 15 49 08](https://github.com/maya-a-iuga/Web-App-DevOps-Project/assets/104773240/d92a045d-b568-4695-b2b9-986874b4ed5a)
 
-- **Add New Order:** Fill out a user-friendly form to add new orders to the system with necessary information.
+- **Add New Order:** Fill out a user-friendly form to add new orders to the system with the necessary information.
   
 ![Screenshot 2023-08-31 at 15 49 26](https://github.com/maya-a-iuga/Web-App-DevOps-Project/assets/104773240/83236d79-6212-4fc3-afa3-3cee88354b1a)
 
@@ -32,7 +32,7 @@ Welcome to the Web App DevOps Project repo! This application allows you to effic
 
 ### Prerequisites
 
-For the application to succesfully run, you need to install the following packages:
+For the application to successfully run, you need to install the following packages:
 
 - flask (version 2.2.2)
 - pyodbc (version 4.0.39)
@@ -41,7 +41,7 @@ For the application to succesfully run, you need to install the following packag
 
 ### Usage
 
-To run the application, you simply need to run the `app.py` script in this repository. Once the application starts you should be able to access it locally at `http://127.0.0.1:5000`. Here you will be meet with the following two pages:
+To run the application, you simply need to run the `app.py` script in this repository. Once the application starts you should be able to access it locally at `http://127.0.0.1:5000`. Here you will be met with the following two pages:
 
 1. **Order List Page:** Navigate to the "Order List" page to view all existing orders. Use the pagination controls to navigate between pages.
 
@@ -52,7 +52,7 @@ To run the application, you simply need to run the `app.py` script in this repos
 1. **Creating the Dockerfile**
 
 I created a Dockerfile containing the instructions for building the Docker image for this project.
-Refer to the [Dockerfile](./Dockerfile) for more detail.
+Refer to the [Dockerfile](./Dockerfile) for more details.
 
 2. **Building Docker Image**
 ```bash
@@ -191,7 +191,7 @@ The cluster is created in the main configuration file.
 
 1. **Provider Setup**
 
-The required provider is called "azurerm" and it is configured with necessary details to authenticate and interact with Azure resources. These details for identification include:
+The required provider is called "azurerm" and it is configured with the necessary details to authenticate and interact with Azure resources. These details for identification include:
   - client_id
   - client_secret
   - subscription_id
@@ -240,22 +240,22 @@ The service type is set to ClusterIP, designating it as an internal service with
 
 The chosen deployment strategy for this project is Rolling Update. This strategy involves updating instances one at a time gradually. During updates, a maximum of one pod deploys while one pod becomes temporarily unavailable. As a result, there is minimal downtime to users making this suitable for the application.
 
-Dealing with issues is straight forward by reverting back to a previous version. Overall, this strategy allows the application's requirement of continuous availability to be met.
+Dealing with issues is straightforward by reverting back to a previous version. Overall, this strategy allows the application's requirement of continuous availability to be met.
 
 - **Testing and Validation**
 These are the tests I have conducted to ensure the functionality and reliability of the application.
 
-```
+```bash
 kubectl get pods
 ```
 This command is used to check the status of the pods. All the pods should be in the 'Running' state and have no restarts.
 
-```
+```bash
 kubectl get svc
 ```
 This command is used to receive information about the services. This can be used to confirm that the services have the correct service type. The ports and IP addresses can also be checked.
 
-```
+```bash
 kubectl port-forward <pod-name> 5000:5000
 ```
 This command is used to test connectivity and interact with the application. The AKS cluster can be accessed at http://127.0.0.1:5000 to test functionality.
@@ -269,6 +269,46 @@ I plan to distribute the application to other internal users within my organisat
 
 
 Helm repositories allow organizations to share and distribute Helm charts easily. By packaging applications into Helm charts and hosting them in repositories, teams can ensure consistent deployment practices and share their applications with others, fostering collaboration and knowledge sharing.
+
+
+## CI/CD Pipeline with Azure DevOps
+
+The pipeline is set up in Azure DevOps, integrating with Docker Hub and Azure Kubernetes Service (AKS).
+
+- **Source Repository**
+The source code for the project is hosted on GitHub. The CI/CD pipeline is triggered on each push to the main branch.
+
+``` yaml
+trigger:
+- main
+```
+
+- **Build Pipeline**
+
+The build pipeline uses an Ubuntu-based build agent where the tasks are executed. A Docker task is used to build and push the Docker image to Docker Hub. The task is possible by setting up a service connection between Azure DevOps and the Docker Hub account where the application image is stored. The buildandpush command is used to build and push a new Docker image.
+
+- **Release Pipeline**
+
+The release pipeline deploys the application to AKS using the KubernetesManifest task. It is configured to deploy the application manifest ([application-manifest.yaml](./application-manifest.yaml)) to the specified AKS cluster in the networking resource group. This is done by creating and configuring an AKS service connection within Azure DevOps. The pipeline is modified to incorporate the Deploy to Kubernetes task with the deploy kubectl command. 
+
+- **Validation**
+
+After configuring the CI/CD pipeline, which includes both the build and release components, I test and validate its functionality. It is necessary to validate the effectiveness of the CI/CD pipeline in application deployment.
+
+```bash
+kubectl get pods
+```
+This command is used to check the status of the pods. The pods should be in the 'Running' state.
+
+```bash
+kubectl get svc
+```
+This command is used to receive information about the services. This can be used to confirm that the services have the correct service type. The ports and IP addresses can also be checked.
+
+```bash
+kubectl port-forward <pod-name> 5000:5000
+```
+This command is used to test connectivity and interact with the application. The AKS cluster can be accessed at http://127.0.0.1:5000 to test functionality.
 
 ## Technology Stack
 
