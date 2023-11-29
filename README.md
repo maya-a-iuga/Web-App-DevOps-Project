@@ -298,7 +298,11 @@ After configuring the CI/CD pipeline, which includes both the build and release 
 ```bash
 kubectl get pods
 ```
-This command is used to check the status of the pods. The pods should be in the 'Running' state.
+This command is used to check the status of the pods. The pods should be in the 'Running' state. A test I did was changing the number of replicas in the application manifest.
+``` yaml
+replicas: 3
+```
+This will change the number of instances of the application changing the number of running pods. This is used to validate that running the pipeline correctly deploys the application manifest.
 
 ```bash
 kubectl get svc
