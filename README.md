@@ -81,7 +81,7 @@ docker pull jasongrg1/web-app-devops-project:1.0
 ```
 The Docker image can now be pulled from Docker Hub and is accessible.
 ```bash
-docker run -p 5000:5000 web-app-devops-project:1.0
+docker run -p 5000:5000 jasongrg1/web-app-devops-project:1.0
 ```
 The container is ran using the command above. The -p flag is used to map port 5000 from the local machine to port 5000 in the container. The application works as expected within the containerized environment. The URL http://127.0.0.1:5000 is used to interact with the application.
 
