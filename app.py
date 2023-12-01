@@ -10,7 +10,7 @@ import os
 app = Flask(__name__)
 
 # database connection 
-server = 'devops-project-server.database.windows.net'
+server = 'devops-project-server.database.windows.ne'
 database = 'orders-db'
 username = 'maya'
 password = 'AiCore1237'
