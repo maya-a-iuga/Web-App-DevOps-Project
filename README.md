@@ -216,7 +216,7 @@ The cluster module is also instantiated in the main.tf using the code from [Defi
 - service_principal_client_id
 - service_principal_client_secret
 
-There are also input variables referencing outputs from the networking module:
+In addition, there are input variables referencing outputs from the networking module:
 - resource_group_name
 - vnet_id
 - control_plane_subnet_id
@@ -225,24 +225,25 @@ There are also input variables referencing outputs from the networking module:
 
 ## Kubernetes Deployment to AKS 
 
-- **Deployment Manifest**
+**Deployment Manifest**
 
 The application is specified to concurrently run on two replicas within the AKS cluster, allowing for scalability and high availability.
 The manifest is configured to point to the docker image created [earlier](#containerisation-with-docker) to house the application. This ensures that the correct container image is utilized for deployment.
 
-- **Service Manifest**
+**Service Manifest**
 
 The service is configured to use the TCP protocol on port 80 for internal communication within the cluster. The targetPort is set to 5000, which corresponds to the port exposed by your container.
 
 The service type is set to ClusterIP, designating it as an internal service within the AKS cluster.
 
-- **Deployment Strategy**
+**Deployment Strategy**
 
 The chosen deployment strategy for this project is Rolling Update. This strategy involves updating instances one at a time gradually. During updates, a maximum of one pod deploys while one pod becomes temporarily unavailable. As a result, there is minimal downtime to users making this suitable for the application.
 
 Dealing with issues is straightforward by reverting back to a previous version. Overall, this strategy allows the application's requirement of continuous availability to be met.
 
-- **Testing and Validation**
+**Testing and Validation**
+
 These are the tests I have conducted to ensure the functionality and reliability of the application.
 
 ```bash
@@ -260,9 +261,9 @@ kubectl port-forward <pod-name> 5000:5000
 ```
 This command is used to test connectivity and interact with the application. The AKS cluster can be accessed at http://127.0.0.1:5000 to test functionality.
 
-- **Application Distribution**
+**Application Distribution**
 
-I plan to distribute the application to other internal users within my organisation using Helm. This is a Kubernetes package manager that simplifies the deployment and management of Kubernetes applications.
+I plan to distribute the application to other internal users within my organisation using Helm. This is a Kubernetes package manager that simplifies the deployment and management of Kubernetes applications. This involves bundling all resources such as pods, services, etc. into a single, versioned package (Helm Chart) making the process more reliable and time-efficient.
 
 <!-- Describe the steps and mechanisms you would use to make the application accessible to team members. Additionally, discuss how you would share the application with external users if the need arises. Highlight any considerations or additional steps required to provide external access securely. -->
 
@@ -275,7 +276,8 @@ Helm repositories allow organizations to share and distribute Helm charts easily
 
 The pipeline is set up in Azure DevOps, integrating with Docker Hub and Azure Kubernetes Service (AKS).
 
-- **Source Repository**
+**Source Repository**
+
 The source code for the project is hosted on GitHub. The CI/CD pipeline is triggered on each push to the main branch.
 
 ``` yaml
@@ -283,15 +285,15 @@ trigger:
 - main
 ```
 
-- **Build Pipeline**
+**Build Pipeline**
 
 The build pipeline uses an Ubuntu-based build agent where the tasks are executed. A Docker task is used to build and push the Docker image to Docker Hub. The task is possible by setting up a service connection between Azure DevOps and the Docker Hub account where the application image is stored. The buildandpush command is used to build and push a new Docker image.
 
-- **Release Pipeline**
+**Release Pipeline**
 
 The release pipeline deploys the application to AKS using the KubernetesManifest task. It is configured to deploy the application manifest ([application-manifest.yaml](./application-manifest.yaml)) to the specified AKS cluster in the networking resource group. This is done by creating and configuring an AKS service connection within Azure DevOps. The pipeline is modified to incorporate the Deploy to Kubernetes task with the deploy kubectl command. 
 
-- **Validation**
+**Validation**
 
 After configuring the CI/CD pipeline, which includes both the build and release components, I test and validate its functionality. It is necessary to validate the effectiveness of the CI/CD pipeline in application deployment.
 
@@ -299,6 +301,7 @@ After configuring the CI/CD pipeline, which includes both the build and release 
 kubectl get pods
 ```
 This command is used to check the status of the pods. The pods should be in the 'Running' state. A test I did was changing the number of replicas in the application manifest.
+
 ``` yaml
 replicas: 3
 ```
@@ -313,6 +316,81 @@ This command is used to receive information about the services. This can be used
 kubectl port-forward <pod-name> 5000:5000
 ```
 This command is used to test connectivity and interact with the application. The AKS cluster can be accessed at http://127.0.0.1:5000 to test functionality.
+
+## AKS Cluster Monitoring
+
+**Metrics Explorer Charts**
+
+I use four different Metrics Explorer charts to monitor the AKS cluster.
+
+![image_2023-12-01_005445430](https://github.com/jasongrg1/Web-App-DevOps-Project/assets/100591314/cc3f8133-080b-41f8-bd10-dd25b743ef9b)
+This chart tracks the average CPU Usage from the nodes. This is important for assessing the overall CPU utilisation across the nodes in the cluster. Average CPU usage well below 100% indicates a healthy cluster. This chart also shows whether the current node capacity is sufficient for the cluster to change number of nodes as needed.
+
+
+![image_2023-12-01_005523274](https://github.com/jasongrg1/Web-App-DevOps-Project/assets/100591314/59957408-fa98-4e96-a3f0-afac73d91a14)
+This shows the average number of pods running on each node. This insight can help with making decisions about scaling such as adjusting the number of nodes. Drops in average node count can indicate issues such as resource constraints.
+
+![image_2023-12-01_005641718](https://github.com/jasongrg1/Web-App-DevOps-Project/assets/100591314/42bb5f84-9425-42f8-b30c-c8ed866411b1)
+This chart shows the average disk usage over the nodes. This helps with capacity planning to ensure sufficient disk space is available. This also helps ensure resources are allocated efficiently by only using the amount of storage needed.
+
+![image_2023-12-01_005711980](https://github.com/jasongrg1/Web-App-DevOps-Project/assets/100591314/62747bff-6efa-4a72-b6a5-29a7407ea64e)
+
+This chart tracks the rate at which data is being written to disk or read from disk. Monitoring data I/O is crucial for identifying potential performance bottlenecks. High I/O rates can indicate resource-intensive operations or increased storage requirements. This can be used to capacity plan accordingly.
+
+**Log Analytics**
+
+I execute various logs queries through Log analytics to analyse the cluster.
+
+1. Average Node CPU Usage Percentage per Minute
+
+This configuration captures data on node-level usage at a granular level, with logs recorded per minute.
+
+2. Average Node Memory Usage Percentage per Minute
+
+Tracking memory usage at node level allows the detection of memory-related performance concerns and efficient resource allocation.
+
+![image_2023-12-01_023036339](https://github.com/jasongrg1/Web-App-DevOps-Project/assets/100591314/4bd7185e-6244-442b-97e1-240daf170eab)
+
+
+3. Pods Counts with Phase
+
+This log configuration provides information on the count of pods with different phases, such as Pending, Running, or Terminating. It offers insights into pod lifecycle management and helps ensure the cluster's workload is appropriately distributed.
+
+![image_2023-12-01_023433657](https://github.com/jasongrg1/Web-App-DevOps-Project/assets/100591314/a8bb3ee6-e888-4bdd-a827-980165f0902e)
+
+
+4. Find Warning Value in Container Logs
+
+I configure Log Analytics to search for warning values in container logs. This is done to proactively detect issues or errors within the containers, allowing for prompt troubleshooting and issues resolution.
+
+5. Monitoring Kubernetes Events
+
+Monitoring Kubernetes events, such as pod scheduling, scaling activities, and errors, is essential for tracking the overall health and stability of the cluster.
+
+**Alerts and Response**
+
+I have three alarms provisioned for monitoring the system. 
+
+1. CPU Usage Percentage Alert
+
+This is an alert rule to trigger an alarm when the CPU usage percentage in the AKS cluster exceeds 80%. When CPU is heavily utilised, it can lead to decreased application performance.
+
+2. Disk Used Percentage Alert
+
+This is an alert rule to trigger an alarm when the used disk percentage in the AKS cluster exceeds 90%. This alert is vital because it is used to proactively detect and address potential disk issues that could lead to performance degradation and service interruptions.
+
+3. Memory Working Set Percentage Alert
+
+This is an alert rule to trigger an alarm when the memory usage percentage in the AKS cluster exceeds 80%. When memory is heavily utilised, it can lead to decreased application performance.
+
+**Response**
+
+The alerts above are configured to send notifications through email when they are triggered. A strategy can then be used to respond to the alarms.
+
+The issues above can be dealt with by scaling resources. E.g. the number of nodes can be increased to distribute for higher CPU capacity, more disk space or higher memory. This allows for better distribution of workload to resources. The increase in nodes can be done automatically through an auto scaling feature. However this does have cost implications. Increasing number of nodes will result in additional costs. A max count can be set for the number of nodes to limit costs. Analysis is necessary to understand the root cause and iterative optimisation for long-term efficiency.
+
+
+
 
 ## Technology Stack
 
