@@ -1,3 +1,5 @@
+from azure.identity import ManagedIdentityCredential
+from azure.keyvault.secrets import SecretClient
 from flask import Flask, render_template, request, redirect, url_for
 from sqlalchemy import create_engine, Column, Integer, String, DateTime
 from sqlalchemy.orm import sessionmaker
@@ -6,14 +8,20 @@ from sqlalchemy import create_engine
 import pyodbc
 import os
 
+key_vault_url = "https://key-vault-jason.vault.azure.net/"
+
+# Set up Azure Key Vault client with Managed Identity
+credential = ManagedIdentityCredential()
+secret_client = SecretClient(vault_url=key_vault_url, credential=credential)
+
 # Initialise Flask App
 app = Flask(__name__)
 
 # database connection 
-server = 'devops-project-server.database.windows.net'
-database = 'orders-db'
-username = 'maya'
-password = 'AiCore1237'
+server = secret_client.get_secret("app-server-name").value
+database = secret_client.get_secret("app-database-name").value
+username = secret_client.get_secret("app-server-username").value
+password = secret_client.get_secret("app-server-password").value
 driver= '{ODBC Driver 18 for SQL Server}'
 
 # Create the connection string
