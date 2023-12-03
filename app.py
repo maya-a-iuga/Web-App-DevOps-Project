@@ -8,7 +8,7 @@ from sqlalchemy import create_engine
 import pyodbc
 import os
 
-key_vault_url = "https://key-vault-jason.vault.azure.net/"
+key_vault_url = "https://webapp-key-jason.vault.azure.net/"
 
 # Set up Azure Key Vault client with Managed Identity
 credential = ManagedIdentityCredential()
