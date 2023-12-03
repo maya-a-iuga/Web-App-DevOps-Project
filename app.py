@@ -1,4 +1,4 @@
-from azure.identity import ManagedIdentityCredential
+from azure.identity import DefaultAzureCredential
 from azure.keyvault.secrets import SecretClient
 from flask import Flask, render_template, request, redirect, url_for
 from sqlalchemy import create_engine, Column, Integer, String, DateTime
@@ -11,7 +11,7 @@ import os
 key_vault_url = "https://webapp-key-jason.vault.azure.net/"
 
 # Set up Azure Key Vault client with Managed Identity
-credential = ManagedIdentityCredential()
+credential = DefaultAzureCredential()
 secret_client = SecretClient(vault_url=key_vault_url, credential=credential)
 
 # Initialise Flask App

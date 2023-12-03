@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: flask-app-container
-        image: jasongrg1/web-app-devops-project:1.1  # Replace with Docker Hub image
+        image: jasongrg1/web-app-devops-project:1.2  # Replace with Docker Hub image
         ports:
         - containerPort: 5000
   strategy:
