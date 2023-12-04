@@ -263,14 +263,11 @@ This command is used to test connectivity and interact with the application. The
 
 **Application Distribution**
 
-I plan to distribute the application to other internal users within my organisation using Helm. This is a Kubernetes package manager that simplifies the deployment and management of Kubernetes applications. This involves bundling all resources such as pods, services, etc. into a single, versioned package (Helm Chart) making the process more reliable and time-efficient.
+Port forwarding allows access to the application from local machine, forwarding traffic to the service's cluster IP address. However, this access remains limited to users within the cluster or those with the necessary access right. 
 
-<!-- Describe the steps and mechanisms you would use to make the application accessible to team members. Additionally, discuss how you would share the application with external users if the need arises. Highlight any considerations or additional steps required to provide external access securely. -->
+To distribute the application to other internal users within my organisation, Ingress can be used. Ingress controllers allows the management of more advance routing, domain-based access, and they can be a powerful way to manage both internal and external traffic. However, setting up an Ingress involves provisioning a company domain, which can be a complex and costly process.
 
-
-
-Helm repositories allow organizations to share and distribute Helm charts easily. By packaging applications into Helm charts and hosting them in repositories, teams can ensure consistent deployment practices and share their applications with others, fostering collaboration and knowledge sharing.
-
+To share the application with external users if the need arises, using a Load Balancer service would be the preferred choice. This setup is especially suitable for serving the application to a broader audience, such as a public website or a customer portal. It is crucial to implement robust security measures such as user authentication to provide external access securely.
 
 ## CI/CD Pipeline with Azure DevOps
 
@@ -452,7 +449,7 @@ secret_value = secret.value
 ```
 
 The requirements.txt file was updated with the following libraries so they are included in the application's Docker image.
-```re
+```
 azure-identity===1.15.0
 azure-keyvault-secrets===4.7.0
 ```
@@ -460,7 +457,7 @@ azure-keyvault-secrets===4.7.0
 
 ## Architecture
 ![image_2023-12-04_023259505](https://github.com/jasongrg1/Web-App-DevOps-Project/assets/100591314/a89510f1-72ca-4c38-bbd1-c2002c601adf)
-
+System Architecture UML Diagram.
 ## Technology Stack
 
 - **Backend:** Flask is used to build the backend of the application, handling routing, data processing, and interactions with the database.
