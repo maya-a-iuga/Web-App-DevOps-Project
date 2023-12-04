@@ -12,11 +12,12 @@ key_vault_url = "https://webapp-key-jason.vault.azure.net/"
 
 # Set up Azure Key Vault client with Managed Identity
 credential = ManagedIdentityCredential()
-secret_client = SecretClient(vault_url=key_vault_url, credential=credential)
 
 credential = ManagedIdentityCredential(
        client_id= "5634ec04-836b-4747-8f0e-6d715a1d3a69",
        )
+
+secret_client = SecretClient(vault_url=key_vault_url, credential=credential)
 
 # Initialise Flask App
 app = Flask(__name__)
