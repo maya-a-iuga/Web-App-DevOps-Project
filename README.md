@@ -471,7 +471,8 @@ azure-keyvault-secrets===4.7.0
 
 ## Contributors 
 
-- [Maya Iuga]([https://github.com/yourusername](https://github.com/maya-a-iuga))
+- [Maya Iuga](https://github.com/maya-a-iuga)
+- [Jason Gurung](https://github.com/jasongrg1)
 
 ## License
 
