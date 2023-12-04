@@ -390,7 +390,76 @@ The alerts above are configured to send notifications through email when they ar
 The issues above can be dealt with by scaling resources. E.g. the number of nodes can be increased to distribute for higher CPU capacity, more disk space or higher memory. This allows for better distribution of workload to resources. The increase in nodes can be done automatically through an auto scaling feature. However this does have cost implications. Increasing number of nodes will result in additional costs. A max count can be set for the number of nodes to limit costs. Analysis is necessary to understand the root cause and iterative optimisation for long-term efficiency.
 
 
+## AKS Integration with Azure Key Vault for Secrets Management
 
+**Azure Key Vault Setup**
+
+An Azure Key Vault is created inside a resource group. The chosen name for this resource needs to be descriptive as it will be used in the Key Vault URI. Hence the chosen name in this project is .
+
+The Key Vault Administrator role was assigned to the Microsoft Entra ID user to receive the necessary permissions for managing secrets within the Key Vault. This is done through the Access Control (IAM) tab of the Key Vault homepage.
+
+**Secrets Stored in the Key Vault**
+
+Four secrets are created in the Key Vault to secure the credentials used within the application to connect to the backend database. These secrets include the server name, server username, server password, and the database name. These are necessary credentials for the web app to function.
+
+
+**Managed Identity for AKS**
+
+Managed identity for the AKS cluster needs to be enabled to allow it to authenticate and interact securely with the Key Vault. This is done using the following command.
+
+```bash
+az aks update --resource-group <resource-group> --name <aks-cluster-name> --enable-managed-identity
+```
+
+The following command is executed to get information about the managed identity created for the AKS cluster:
+
+```bash
+az aks show --resource-group <resource-group> --name <aks-cluster-name> --query identityProfile
+```
+This provides the client id of the identity which is required when assigning Key Vault permissions.
+
+
+The necessary RBAC role needs to be assigned to the Managed Identity of the AKS cluster, therefore granting AKS the necessary permissions to interact securely with Azure Key Vault. The Key Vault Secrets Officer role will be assigned to the Managed Identity to provide it permissions to read, list, set and delete secrets, certificates, and keys within the specified Azure Key Vault.
+
+Once the integration is complete, applications deployed in your AKS cluster can securely retrieve secrets without exposing sensitive information. Managed Identity handles authentication, eliminating the need for explicit credentials.
+
+```bash
+az role assignment create --role "Key Vault Secrets Officer" \
+  --assignee <managed-identity-client-id> \
+  --scope /subscriptions/{subscription-id}/resourceGroups/{resource-group}/providers/Microsoft.KeyVault/vaults/{key-vault-name}
+```
+
+
+**Incorporating Manage Identity Credentials into Application Code**
+
+The Azure Identity and Azure Key Vault libraries are incorporated so the AKS-hosted Python application gains the capability of accessing secrets stored in Azure Key Vault. This replaces the need for hard coding sensitive information.
+
+```python
+from azure.identity import ManagedIdentityCredential
+from azure.keyvault.secrets import SecretClient
+
+key_vault_url = "https://key-vault-name.vault.azure.net/"
+
+# Set up Azure Key Vault client with Managed Identity
+credential = ManagedIdentityCredential()
+secret_client = SecretClient(vault_url=key_vault_url, credential=credential)
+
+# Access the secret values from Key Vault
+secret = secret_client.get_secret("secret-name")
+
+# Access the secret values
+secret_value = secret.value
+```
+
+The requirements.txt file was updated with the following libraries so they are included in the application's Docker image.
+```re
+azure-identity===1.15.0
+azure-keyvault-secrets===4.7.0
+```
+
+
+## Architecture
+![image_2023-12-04_023259505](https://github.com/jasongrg1/Web-App-DevOps-Project/assets/100591314/a89510f1-72ca-4c38-bbd1-c2002c601adf)
 
 ## Technology Stack
 
