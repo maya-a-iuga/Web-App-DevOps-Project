@@ -271,7 +271,7 @@ To share the application with external users if the need arises, using a Load Ba
 
 ## CI/CD Pipeline with Azure DevOps
 
-The pipeline is set up in Azure DevOps, integrating with Docker Hub and Azure Kubernetes Service (AKS).
+The pipeline for this application([azure-pipelines.yml](./azure-pipelines.yml)) is set up in Azure DevOps, integrating with Docker Hub and Azure Kubernetes Service (AKS).
 
 **Source Repository**
 
