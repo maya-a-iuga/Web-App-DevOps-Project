@@ -19,7 +19,7 @@ module "networking" {
   source = "./networking-module"
 
   # Input variables for the networking module
-  resource_group_name = "networking-resource-group"
+  resource_group_name = "networking-rg"
   location           = "UK South"
   vnet_address_space = ["10.0.0.0/16"]
   public_ip_address = var.public_ip_address
