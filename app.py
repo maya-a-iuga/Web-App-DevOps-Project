@@ -11,7 +11,7 @@ import os
 key_vault_url = "https://webapp-key-jason.vault.azure.net/"
 
 # Set up Azure Key Vault client with Managed Identity
-credential = ManagedIdentityCredential()
+credential = ManagedIdentityCredential(client_id= "1f69c4c6-2048-4089-b3d0-ce0470098dbc")
 
 secret_client = SecretClient(vault_url=key_vault_url, credential=credential)
 
