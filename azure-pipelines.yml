@@ -16,7 +16,7 @@ steps:
     repository: 'jasongrg1/web-app-devops-project'
     command: 'buildAndPush'
     Dockerfile: '**/Dockerfile'
-    tags: '2.1'
+    tags: '2.2'
 - task: KubernetesManifest@1
   inputs:
     action: 'deploy'
