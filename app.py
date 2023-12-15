@@ -10,12 +10,12 @@ import os
 app = Flask(__name__)
 
 # database connection 
-server = 'devops-project-server.database.windows.net'
-database = 'orders-db'
-username = 'maya'
-password = 'AiCore1237'
-driver= '{ODBC Driver 18 for SQL Server}'
-
+server='devops-project-server.database.windows.net'
+database='orders-db'
+username='maya'
+password='AiCore1237'
+driver='{ODBC Driver 18 for SQL Server}'
+# https://learn.microsoft.com/en-us/sql/connect/odbc/download-odbc-driver-for-sql-server?view=sql-server-ver16
 # Create the connection string
 connection_string=f'Driver={driver};\
     Server=tcp:{server},1433;\
@@ -46,6 +46,7 @@ class Order(Base):
     product_quantity = Column('Product Quantity', Integer)
     order_date = Column('Order Date', DateTime)
     shipping_date = Column('Shipping Date', DateTime)
+    delivery_date = Column('Delivery Date', DateTime)  # New line added 15 Dec 2023 milestone 2 task 4
 
 # define routes
 # route to display orders
@@ -85,6 +86,7 @@ def add_order():
     product_quantity = request.form.get('product_quantity')
     order_date = request.form.get('order_date')
     shipping_date = request.form.get('shipping_date')
+    delivery_date = request.form.get('delivery_date')  # New line added on 15 Dec 2023 milestone 2 task 4
     
     # Create a session to interact with the database
     session = Session()
@@ -98,7 +100,8 @@ def add_order():
         product_code=product_code,
         product_quantity=product_quantity,
         order_date=order_date,
-        shipping_date=shipping_date
+        shipping_date=shipping_date,
+        delivery_date=delivery_date # New line added on 15 Dec 2023 milestone 2 task 4
     )
 
     # Add the new order to the session and commit to the database
