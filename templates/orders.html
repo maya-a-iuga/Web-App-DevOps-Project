@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Order Management</title>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
 </head>
+
 <body>
     <div class="header">
         <h1>Fictional Company Name</h1>
@@ -12,7 +14,7 @@
         <button id="btn-orders" class="tab-label">Order List</button>
         <button id="btn-add-order" class="tab-label">Add New Order</button>
     </div>
-    
+
     <div class="tab-container">
         <div class="content" id="order-list-content">
             <h2 class="tab-title">Order List</h2>
@@ -27,31 +29,33 @@
                         <th>Product Quantity</th>
                         <th>Order Date</th>
                         <th>Shipping Date</th>
+                        <th>Delivery Date</th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for order in orders %}
-                        <tr>
-                            <td>{{ order.date_uuid }}</td>
-                            <td>{{ order.user_id }}</td>
-                            <td>{{ order.card_number }}</td>
-                            <td>{{ order.store_code }}</td>
-                            <td>{{ order.product_code }}</td>
-                            <td>{{ order.product_quantity }}</td>
-                            <td>{{ order.order_date }}</td>
-                            <td>{{ order.shipping_date }}</td>
-                        </tr>
+                    <tr>
+                        <td>{{ order.date_uuid }}</td>
+                        <td>{{ order.user_id }}</td>
+                        <td>{{ order.card_number }}</td>
+                        <td>{{ order.store_code }}</td>
+                        <td>{{ order.product_code }}</td>
+                        <td>{{ order.product_quantity }}</td>
+                        <td>{{ order.order_date }}</td>
+                        <td>{{ order.shipping_date }}</td>
+                        <td>{{ order.delivery_date }}</td>
+                    </tr>
                     {% endfor %}
                 </tbody>
             </table>
             <div class="pagination">
                 {% if page > 1 %}
-                    <a href="{{ url_for('display_orders', page=page-1) }}" class="pagination-link">Previous</a>
+                <a href="{{ url_for('display_orders', page=page-1) }}" class="pagination-link">Previous</a>
                 {% endif %}
                 <span>Page {{ page }} of {{ total_pages }}</span>
-                {% if page < total_pages %}
-                    <a href="{{ url_for('display_orders', page=page+1) }}" class="pagination-link">Next</a>
-                {% endif %}
+                {% if page < total_pages %} <a href="{{ url_for('display_orders', page=page+1) }}"
+                    class="pagination-link">Next</a>
+                    {% endif %}
             </div>
         </div>
         <div class="content" id="add-order-content" style="display: none;">
@@ -73,10 +77,13 @@
                 <input type="text" id="order_date" name="order_date" required><br>
                 <label for="shipping_date">Shipping Date:</label>
                 <input type="text" id="shipping_date" name="shipping_date" required><br>
+                <label for="delivery_date">Delivery Date:</label>
+                <input type="date" id="delivery_date" name="delivery_date"><br><br>
                 <input type="submit" value="Add Order">
             </form>
         </div>
     </div>
     <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
+
 </html>
