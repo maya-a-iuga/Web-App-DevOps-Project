@@ -9,15 +9,15 @@ import os
 # Initialise Flask App
 app = Flask(__name__)
 
-# database connection 
+# database connection
 server = 'devops-project-server.database.windows.net'
 database = 'orders-db'
 username = 'maya'
 password = 'AiCore1237'
-driver= '{ODBC Driver 18 for SQL Server}'
+driver = '{ODBC Driver 18 for SQL Server}'
 
 # Create the connection string
-connection_string=f'Driver={driver};\
+connection_string = f'Driver={driver};\
     Server=tcp:{server},1433;\
     Database={database};\
     Uid={username};\
@@ -27,7 +27,8 @@ connection_string=f'Driver={driver};\
     Connection Timeout=30;'
 
 # Create the engine to connect to the database
-engine = create_engine("mssql+pyodbc:///?odbc_connect={}".format(connection_string))
+engine = create_engine(
+    "mssql+pyodbc:///?odbc_connect={}".format(connection_string))
 engine.connect()
 
 # Create the Session
@@ -35,6 +36,7 @@ Session = sessionmaker(bind=engine)
 
 # Define the Order data model
 Base = declarative_base()
+
 
 class Order(Base):
     __tablename__ = 'orders'
@@ -46,9 +48,12 @@ class Order(Base):
     product_quantity = Column('Product Quantity', Integer)
     order_date = Column('Order Date', DateTime)
     shipping_date = Column('Shipping Date', DateTime)
+    delivery_date = Column('Delivery Date', DateTime)
 
 # define routes
 # route to display orders
+
+
 @app.route('/')
 def display_orders():
 
@@ -63,7 +68,8 @@ def display_orders():
     session = Session()
 
     # Fetch a subset of data for the current page
-    current_page_orders = session.query(Order).order_by(Order.user_id, Order.date_uuid).slice(start_index, end_index).all()
+    current_page_orders = session.query(Order).order_by(
+        Order.user_id, Order.date_uuid).slice(start_index, end_index).all()
 
     # Calculate the total number of pages
     total_rows = session.query(Order).count()
@@ -75,6 +81,8 @@ def display_orders():
     return render_template('orders.html', orders=current_page_orders, page=page, total_pages=total_pages)
 
 # route to add orders
+
+
 @app.route('/add_order', methods=['POST'])
 def add_order():
     date_uuid = request.form.get('date_uuid')
@@ -85,7 +93,8 @@ def add_order():
     product_quantity = request.form.get('product_quantity')
     order_date = request.form.get('order_date')
     shipping_date = request.form.get('shipping_date')
-    
+    delivery_date = request.form['delivery_date']
+
     # Create a session to interact with the database
     session = Session()
 
@@ -98,7 +107,8 @@ def add_order():
         product_code=product_code,
         product_quantity=product_quantity,
         order_date=order_date,
-        shipping_date=shipping_date
+        shipping_date=shipping_date,
+        delivery_date=delivery_date
     )
 
     # Add the new order to the session and commit to the database
@@ -106,6 +116,7 @@ def add_order():
     session.commit()
 
     return redirect(url_for('display_orders'))
+
 
 # run the app
 if __name__ == '__main__':
