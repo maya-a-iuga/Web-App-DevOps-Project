@@ -46,7 +46,6 @@ class Order(Base):
     product_quantity = Column('Product Quantity', Integer)
     order_date = Column('Order Date', DateTime)
     shipping_date = Column('Shipping Date', DateTime)
-    delivery_date = Column('Delivery Date', DateTime)
 
 # define routes
 # route to display orders
