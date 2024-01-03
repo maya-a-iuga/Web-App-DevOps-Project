@@ -5,7 +5,9 @@ FROM python:3.8-slim
 WORKDIR /app
 
 # TODO: Step 3 Copy the application files in the container
-COPY app.py requirements.txt static templates /app/
+COPY app.py requirements.txt /app/
+COPY static /app/static/
+COPY templates /app/templates/
 
 # Install system dependencies and ODBC driver
 RUN apt-get update && apt-get install -y \
