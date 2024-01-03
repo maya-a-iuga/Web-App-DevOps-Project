@@ -54,5 +54,5 @@ docker push  asoundmove/aicore-devopsproject-webapp:latest
 
 I needed to create a 'repository' (using the name of the image I wanted to store my build under) in docker hub, before I could push it.
 
-I learnt that the Dockerfile COPY with a source directory copies only the contents of that directory rather than the directory itself (and contents). So in order to avoide copying unwated files, I had to copy files and directories as separate commands.
+I learnt that the Dockerfile COPY with a source directory copies only the contents of that directory rather than the directory itself (and contents). So in order to avoid copying unwanted files, I had to copy files and directories as separate commands.
 
