@@ -60,6 +60,12 @@ To run the application, you simply need to run the `app.py` script in this repos
 
 ## CI/CD
 
+### Assumptions
+
+- You have an Azure account or access to a subscription.
+- You have defined a service principal with full access to the relevant subscription.
+
+
 ### Containerisation
 
 The web app is packaged as a docker image, available in my personal public github repo: `asoundmove/aicore-devopsproject-webapp:latest`.

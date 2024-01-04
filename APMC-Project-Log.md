@@ -59,7 +59,7 @@ I learnt that the Dockerfile COPY with a source directory copies only the conten
 Kept track of everything in a feature branch, then merged to main.
 
 
-# Milestones 4 & 5 - IaC, terraform
+# Milestones 4, 5 & 6 - IaC, terraform
 
 ## networking module
 
@@ -75,3 +75,10 @@ Added a spell check extension to VS Code.
 I adapted the cluster module created in an earlier lesson.   
 
 
+## Create a service principal
+
+`az account list`, take note of `Id`, this is the subscription id to use in the next command.
+
+`az ad sp create-for-rbac --name $APP_NAME --role contributor --scopes /subscriptions/$SUBSCRIPTION_ID`
+
+For `APP_NAME`, I used `apmcWebApp`, store the credentials in a safe place, e.g. a password vault.
