@@ -46,6 +46,7 @@ class Order(Base):
     product_quantity = Column('Product Quantity', Integer)
     order_date = Column('Order Date', DateTime)
     shipping_date = Column('Shipping Date', DateTime)
+   
 
 # define routes
 # route to display orders
@@ -85,7 +86,7 @@ def add_order():
     product_quantity = request.form.get('product_quantity')
     order_date = request.form.get('order_date')
     shipping_date = request.form.get('shipping_date')
-    
+
     # Create a session to interact with the database
     session = Session()
 
@@ -110,3 +111,4 @@ def add_order():
 # run the app
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)
+
