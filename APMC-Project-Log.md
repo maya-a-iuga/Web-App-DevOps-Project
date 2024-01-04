@@ -82,3 +82,18 @@ I adapted the cluster module created in an earlier lesson.
 `az ad sp create-for-rbac --name $APP_NAME --role contributor --scopes /subscriptions/$SUBSCRIPTION_ID`
 
 For `APP_NAME`, I used `apmcWebApp`, store the credentials in a safe place, e.g. a password vault.
+
+
+## Create cluster
+
+Adapt `main.tf` & co. from previous lesson, using environment variables to pass secrets.
+
+Then, do:
+```
+terraform init
+terraform plan
+terraform apply
+# If needed:
+#rm ~/.kube/config
+az aks get-credentials --resource-group aks-nw-rg --name terraform-aks-cluster-webapp
+```
