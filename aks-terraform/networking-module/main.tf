@@ -29,7 +29,7 @@ resource "azurerm_subnet" "worker_node_subnet" {
   address_prefixes     = ["10.0.2.0/24"]
 }
 
-# Define Network Security Group (NSG) for the AKS subnet
+# Define Network Security Group (NSG) for the AKS network
 resource "azurerm_network_security_group" "aks_nsg" {
   name                = "aks-nsg"
   location            = azurerm_resource_group.networking.location

@@ -2,13 +2,16 @@
 
 Welcome to the Web App DevOps Project repo! This application allows you to efficiently manage and track orders for a potential business. It provides an intuitive user interface for viewing existing orders and adding new ones.
 
+
 ## Table of Contents
 
 - [Features](#features)
 - [Getting Started](#getting-started)
 - [Technology Stack](#technology-stack)
+- [CI/CD](#cicd)
 - [Contributors](#contributors)
 - [License](#license)
+
 
 ## Features
 
@@ -25,6 +28,7 @@ Welcome to the Web App DevOps Project repo! This application allows you to effic
 ![Screenshot 2023-08-31 at 15 49 26](https://github.com/maya-a-iuga/Web-App-DevOps-Project/assets/104773240/83236d79-6212-4fc3-afa3-3cee88354b1a)
 
 - **Data Validation:** Ensure data accuracy and completeness with required fields, date restrictions, and card number validation.
+
 
 ## Getting Started
 
@@ -53,9 +57,71 @@ To run the application, you simply need to run the `app.py` script in this repos
 
 - **Database:** The application employs an Azure SQL Database as its database system to store order-related data.
 
+
+## CI/CD
+
+### Containerisation
+
+The web app is packaged as a docker image, available in my personal public github repo: `asoundmove/aicore-devopsproject-webapp:latest`.
+
+Packaging is currently done manually using `Dockerfile` and `docker build -t aicore-devopsproject-webapp .`.
+
+
+### IaC
+
+Infrastructure as code is defined in directory `aks-terraform`.
+
+*Work in progress*:
+
+#### Azure network resource definition
+
+Terraform module: `aks-terraform/networking-module`
+
+Input variables:
+- resource_group_name:   
+  Name of the Azure Resource Group in which we define the network for the WebApp
+
+- network_security_group_name:   
+  Name of the Azure Network Security Group
+
+- location:   
+  Region in which to define resources
+
+- kubectl_ip:   
+  Public IP address of the host of kubectl
+
+- vnet_address_space:   
+  Address space for the WebApp Virtual Network (VNet).
+
+Output variables:
+- vnet_id:   
+  ID of the Virtual Network (VNet).
+
+- control_plane_subnet_id:   
+  ID of the control plane subnet.
+
+- worker_node_subnet_id:   
+  ID of the worker node subnet.
+
+- networking_resource_group_name:   
+  Name of the Azure Resource Group for networking resources.
+
+- aks_nsg_id:   
+  ID of the Network Security Group (NSG) for AKS.
+
+Defines:
+- A Resource Group (RG)
+- A Virtual Network (VN) `aks-vnet`, to contain all AKS communications
+- A Subnet for the AKS control plane, `control_plane_subnet`
+- A Subnet for the AKS worker node, `worker_node_subnet`
+- A Network Security Group (NSG) for the AKS network
+- Two inbound rules to allow `ssh` and `https` in from my dev host, where I can use kubectl
+
+
 ## Contributors 
 
-- [Maya Iuga]([https://github.com/yourusername](https://github.com/maya-a-iuga))
+- [Maya Iuga](https://github.com/maya-a-iuga), project base
+- [Alain Culos](https://github.com/apmcgh), CI/CD
 
 ## License
 
