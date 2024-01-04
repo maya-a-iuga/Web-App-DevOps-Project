@@ -118,10 +118,48 @@ Defines:
 - Two inbound rules to allow `ssh` and `https` in from my dev host, where I can use kubectl
 
 
+#### AKS cluster definition
+
+
+Input variables (to define the cluster):
+- aks_cluster_name:   Cluster name
+- cluster_location:   Region in which to define resources
+- dns_prefix
+- kubernetes_version
+- service_principal_client_id
+- service_principal_client_secret
+
+Input variables (output by networking module):
+- vnet_id:   
+  ID of the Virtual Network (VNet).
+
+- control_plane_subnet_id:   
+  ID of the control plane subnet.
+
+- worker_node_subnet_id:   
+  ID of the worker node subnet.
+
+- resource_group_name:   
+  Name of the Azure Resource Group for networking resources.
+
+Output variables:
+- aks_cluster_name:   
+  Name of the AKS cluster.
+
+- aks_cluster_id:   
+  ID of the AKS cluster.
+
+- aks_kubeconfig:   
+  Kubeconfig file for accessing the AKS cluster.
+
+Defines:
+- An AKS cluster
+
+
 ## Contributors 
 
 - [Maya Iuga](https://github.com/maya-a-iuga), project base
-- [Alain Culos](https://github.com/apmcgh), CI/CD
+- [Alain Culos](https://github.com/apmcgh), CI/CD, AiCore course project
 
 ## License
 

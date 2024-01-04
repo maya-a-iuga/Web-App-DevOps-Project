@@ -1,7 +1,7 @@
 # AiCore Project Log
 
-Author: Alain Culos
-Date: 2024-01-03
+Author: Alain Culos   
+Date created: 2024-01-03
 
 
 # Milestones 1 & 2 - Fork repo and run App
@@ -59,12 +59,19 @@ I learnt that the Dockerfile COPY with a source directory copies only the conten
 Kept track of everything in a feature branch, then merged to main.
 
 
-# Milestone 4 - IaC, terraform
+# Milestones 4 & 5 - IaC, terraform
 
 ## networking module
 
 I adapted the networking module created in an earlier lesson.   
 Added a `.gitignore` before issuing `terraform init` in the module directory.   
 Keeping track of changes in branch `feature/terraform`.   
+
+Added a spell check extension to VS Code.
+
+
+## AKS cluster module
+
+I adapted the cluster module created in an earlier lesson.   
 
 
