@@ -26,6 +26,7 @@ Session.vim
 *.un~
 
 ### Visual Studio Code ###
+.vscode
 .vscode/*
 !.vscode/settings.json
 !.vscode/tasks.json

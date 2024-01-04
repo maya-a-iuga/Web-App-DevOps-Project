@@ -1,4 +1,4 @@
-# AiCore Projet Log
+# AiCore Project Log
 
 Author: Alain Culos
 Date: 2024-01-03
@@ -55,4 +55,16 @@ docker push  asoundmove/aicore-devopsproject-webapp:latest
 I needed to create a 'repository' (using the name of the image I wanted to store my build under) in docker hub, before I could push it.
 
 I learnt that the Dockerfile COPY with a source directory copies only the contents of that directory rather than the directory itself (and contents). So in order to avoid copying unwanted files, I had to copy files and directories as separate commands.
+
+Kept track of everything in a feature branch, then merged to main.
+
+
+# Milestone 4 - IaC, terraform
+
+## networking module
+
+I adapted the networking module created in an earlier lesson.   
+Added a `.gitignore` before issuing `terraform init` in the module directory.   
+Keeping track of changes in branch `feature/terraform`.   
+
 
