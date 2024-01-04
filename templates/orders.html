@@ -27,6 +27,11 @@
                         <th>Product Quantity</th>
                         <th>Order Date</th>
                         <th>Shipping Date</th>
+        feature/add-delivery-date
+                        <th>Delivery Date</th>  
+
+                        <th>Delivery Date</th> 
+        main
                     </tr>
                 </thead>
                 <tbody>
@@ -40,6 +45,11 @@
                             <td>{{ order.product_quantity }}</td>
                             <td>{{ order.order_date }}</td>
                             <td>{{ order.shipping_date }}</td>
+                            <td>{{ order.delivery_date }}</td>  
+        feature/add-delivery-date
+                            
+
+         main
                         </tr>
                     {% endfor %}
                 </tbody>
@@ -73,7 +83,15 @@
                 <input type="text" id="order_date" name="order_date" required><br>
                 <label for="shipping_date">Shipping Date:</label>
                 <input type="text" id="shipping_date" name="shipping_date" required><br>
+       feature/add-delivery-date
+                <label for="delivery_date">Delivery Date:</label> 
+                <input type="date" id="delivery_date" name="delivery_date"><br><br>       
+
+                <label for="delivery_date">Delivery Date:</label>
+                <input type="date" id="delivery_date" name="delivery_date"><br><br>
+     main
                 <input type="submit" value="Add Order">
+
             </form>
         </div>
     </div>
