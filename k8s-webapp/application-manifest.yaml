@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webapp-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: webapp
+  template:
+    metadata:
+      labels:
+        app: webapp
+    spec:
+      containers:
+        - name: webapp-container
+          image: asoundmove/aicore-devopsproject-webapp:latest
+          ports:
+            - containerPort: 5000
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: webapp-service
+spec:
+  loadBalancerSourceRanges:
+    - 185.241.166.93/32
+  selector:
+    app: webapp
+  ports:
+    - protocol: TCP
+      port: 80 # Port for internal communication within the cluster
+      targetPort: 5000 # Port exposed by the container
+  type: LoadBalancer

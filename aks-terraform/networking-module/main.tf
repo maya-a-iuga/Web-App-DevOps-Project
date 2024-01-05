@@ -51,10 +51,25 @@ resource "azurerm_network_security_rule" "kube_apiserver" {
   network_security_group_name = azurerm_network_security_group.aks_nsg.name
 }
 
-# Allow inbound traffic for SSH (TCP/22) - Optional
+# Allow inbound traffic to webapp (TCP/80) from your public IP address
+resource "azurerm_network_security_rule" "webapp" {
+  name                        = "allow_http_in"
+  priority                    = 1002
+  direction                   = "Inbound"
+  access                      = "Allow"
+  protocol                    = "Tcp"
+  source_port_range           = "*"
+  destination_port_range      = "80"
+  source_address_prefix       = var.kubectl_ip
+  destination_address_prefix  = "*"
+  resource_group_name         = azurerm_resource_group.networking.name
+  network_security_group_name = azurerm_network_security_group.aks_nsg.name
+}
+
+# Allow inbound traffic for SSH (TCP/22)
 resource "azurerm_network_security_rule" "ssh" {
   name                        = "allow_ssh_in"
-  priority                    = 1002
+  priority                    = 1003
   direction                   = "Inbound"
   access                      = "Allow"
   protocol                    = "Tcp"
@@ -64,4 +79,14 @@ resource "azurerm_network_security_rule" "ssh" {
   destination_address_prefix  = "*"
   resource_group_name         = azurerm_resource_group.networking.name
   network_security_group_name = azurerm_network_security_group.aks_nsg.name
+}
+
+resource "azurerm_subnet_network_security_group_association" "control_plane_subnet_nsg" {
+  subnet_id                 = azurerm_subnet.control_plane_subnet.id
+  network_security_group_id = azurerm_network_security_group.aks_nsg.id
+}
+
+resource "azurerm_subnet_network_security_group_association" "worker_node_subnet_nsg" {
+  subnet_id                 = azurerm_subnet.worker_node_subnet.id
+  network_security_group_id = azurerm_network_security_group.aks_nsg.id
 }
