@@ -28,6 +28,8 @@ kind: Service
 metadata:
   name: webapp-service
 spec:
+  loadBalancerSourceRanges:
+    - 185.241.166.93/32
   selector:
     app: webapp
   ports:

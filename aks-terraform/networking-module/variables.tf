@@ -19,7 +19,7 @@ variable "location" {
 variable "kubectl_ip" {
   description = "Public IP address of the host of kubectl"
   type        = string
-  default     = "193.164.22.93"
+  default     = "185.241.166.93"
   # curl ipinfo.io/ip
 }
 
