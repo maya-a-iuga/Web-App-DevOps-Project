@@ -1,7 +1,7 @@
-# AiCore Projet Log
+# AiCore Project Log
 
-Author: Alain Culos
-Date: 2024-01-03
+Author: Alain Culos   
+Date created: 2024-01-03
 
 
 # Milestones 1 & 2 - Fork repo and run App
@@ -54,5 +54,46 @@ docker push  asoundmove/aicore-devopsproject-webapp:latest
 
 I needed to create a 'repository' (using the name of the image I wanted to store my build under) in docker hub, before I could push it.
 
-I learnt that the Dockerfile COPY with a source directory copies only the contents of that directory rather than the directory itself (and contents). So in order to avoide copying unwated files, I had to copy files and directories as separate commands.
+I learnt that the Dockerfile COPY with a source directory copies only the contents of that directory rather than the directory itself (and contents). So in order to avoid copying unwanted files, I had to copy files and directories as separate commands.
 
+Kept track of everything in a feature branch, then merged to main.
+
+
+# Milestones 4, 5 & 6 - IaC, terraform
+
+## networking module
+
+I adapted the networking module created in an earlier lesson.   
+Added a `.gitignore` before issuing `terraform init` in the module directory.   
+Keeping track of changes in branch `feature/terraform`.   
+
+Added a spell check extension to VS Code.
+
+
+## AKS cluster module
+
+I adapted the cluster module created in an earlier lesson.   
+
+
+## Create a service principal
+
+`az account list`, take note of `Id`, this is the subscription id to use in the next command.
+
+`az ad sp create-for-rbac --name $APP_NAME --role contributor --scopes /subscriptions/$SUBSCRIPTION_ID`
+
+For `APP_NAME`, I used `apmcWebApp`, store the credentials in a safe place, e.g. a password vault.
+
+
+## Create cluster
+
+Adapt `main.tf` & co. from previous lesson, using environment variables to pass secrets.
+
+Then, do:
+```
+terraform init
+terraform plan
+terraform apply
+# If needed:
+#rm ~/.kube/config
+az aks get-credentials --resource-group aks-nw-rg --name terraform-aks-cluster-webapp
+```
