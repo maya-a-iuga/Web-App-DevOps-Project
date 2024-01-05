@@ -109,5 +109,7 @@ I adapted the `nginx` sample deployment from a previous lesson.
 
 In [My Azure DevOps account](https://dev.azure.com/apmcazure/), create project `AiCore--DevOps-Course`.
 
-Create a new pipeline, select GitHub, select the relevant AiCore webapp project repo, use the starter pipeline template.
+Create a new pipeline, select GitHub, select the relevant AiCore webapp project repo, use the starter pipeline template. Save the pipeline, creating a `feature/azure-pipeline` branch.
+
+
 
