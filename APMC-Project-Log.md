@@ -102,3 +102,12 @@ az aks get-credentials --resource-group aks-nw-rg --name terraform-aks-cluster-w
 # Milestone 7 - Deploy webapp on AKS
 
 I adapted the `nginx` sample deployment from a previous lesson.
+
+
+
+# Milestone 8 - Azure DevOps project
+
+In [My Azure DevOps account](https://dev.azure.com/apmcazure/), create project `AiCore--DevOps-Course`.
+
+Create a new pipeline, select GitHub, select the relevant AiCore webapp project repo, use the starter pipeline template.
+
