@@ -9,8 +9,9 @@ This project was forked from maya-a-iuga/Web-App-DevOps-Project. The parent repo
 ## Table of Contents
 
 - [Features](#features)
+- [Unmerged Features](#unmerged-features)
 - [Getting Started](#getting-started)
-- [My Additions](#my-additions)
+- [Containerisation](#containerisation)
 - [Technology Stack](#technology-stack)
 - [Contributors](#contributors)
 - [License](#license)
@@ -50,7 +51,7 @@ To run the application, you simply need to run the `app.py` script in this repos
 
 2. **Add New Order Page:** Click on the "Add New Order" tab to access the order form. Complete all required fields and ensure that your entries meet the specified criteria.
 
-## My Additions
+## Unmerged Features
 
 ### New Feature Branch - delivery date
 
@@ -60,6 +61,30 @@ Having created this new feature on said new branch, it has been decided that thi
 
 However, the described feature is avaiable on said branch. !!! And as the orders.html and app.py files have not been changed as the main branch has progressed, a 3-way merge is possible at a later point in time should this feature be needed.
 
+## Containerisation
+
+### Steps for containerisation of the application
+
+The image was created using a dockerfile within the root of the repository (Dockerfile).
+
+- The parent image used was python:3.8-slim, an official python runtime (see From command)
+- The working directory was set in the container, and all applications within the working directory were copied into the container (see Workdir and Copy commands)
+- System dependencies and ODBC driver were installed (see first Run command)
+- Pip and setup tools were installed (see second Run command)
+- Packages specified in requirements.txt were installed (see third Run command)
+- Port 5000 was exposed (see Expose command)
+- Start up command was set to run app.py using python executable (see CMD command)
+
+### Commands used to build image and run container
+
+- The docker image was built and tagged as ‘tm_web_app_image’ using the comman: docker build -t tm_web_app_image .
+- The docker container was run locally for testing purposes using the command: docker run -p 5000:5000 tm_web_app_image
+- The image was tagged using the command: docker tag tm_web_app_image tmoule/tm_web_app_image:latest
+- The image was pushed to docker hub using the command:docker push
+
+### Accessing docker image
+- The image is available on docker hub as tmoule/tm_web_app_image
+- It can be run using the command: docker run -p 5000:5000 tmoule/tm_web_app_image
 
 ## Technology Stack
 
