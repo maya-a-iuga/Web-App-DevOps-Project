@@ -2,10 +2,15 @@
 
 Welcome to the Web App DevOps Project repo! This application allows you to efficiently manage and track orders for a potential business. It provides an intuitive user interface for viewing existing orders and adding new ones.
 
+This project was forked from maya-a-iuga/Web-App-DevOps-Project. The parent repo contained all the code for the app EXPLAIN THE ADDITIONS YOU HAVE MADE!!!
+
+
+
 ## Table of Contents
 
 - [Features](#features)
 - [Getting Started](#getting-started)
+- [My Additions](#my-additions)
 - [Technology Stack](#technology-stack)
 - [Contributors](#contributors)
 - [License](#license)
@@ -45,6 +50,17 @@ To run the application, you simply need to run the `app.py` script in this repos
 
 2. **Add New Order Page:** Click on the "Add New Order" tab to access the order form. Complete all required fields and ensure that your entries meet the specified criteria.
 
+## My Additions
+
+### New Feature Branch - delivery date
+
+On branch, feature/add-delivery-date, I have added a new feature which allows delivery date information to be added to the form, and then displayed within the table. This was achieved by updating the app.py and orders.html files.
+
+Having created this new feature on said new branch, it has been decided that this feature is not necessary; therefore a pull request has not been made to merge this feature into the main branch. 
+
+However, the described feature is avaiable on said branch. !!! And as the orders.html and app.py files have not been changed as the main branch has progressed, a 3-way merge is possible at a later point in time should this feature be needed.
+
+
 ## Technology Stack
 
 - **Backend:** Flask is used to build the backend of the application, handling routing, data processing, and interactions with the database.
@@ -56,6 +72,7 @@ To run the application, you simply need to run the `app.py` script in this repos
 ## Contributors 
 
 - [Maya Iuga]([https://github.com/yourusername](https://github.com/maya-a-iuga))
+- [Tom Moule](https://github.com/Tom-Moule)
 
 ## License
 
