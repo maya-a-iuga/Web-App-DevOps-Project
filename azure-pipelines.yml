@@ -14,9 +14,11 @@ steps:
   inputs:
     containerRegistry: 'apmc-docker'
     repository: 'asoundmove/aicore-devopsproject-webapp'
-    tags: 'latest'
     command: 'buildAndPush'
     Dockerfile: '**/Dockerfile'
+    tags: |
+      latest
+      $(Build.BuildId)
 
 # - script: echo Hello, world!
 #   displayName: 'Run a one-line script'
