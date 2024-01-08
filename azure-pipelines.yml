@@ -13,7 +13,8 @@ steps:
 - task: Docker@2
   inputs:
     containerRegistry: 'apmc-docker'
-    repository: 'aicore-devopsproject-webapp'
+    repository: 'asoundmove/aicore-devopsproject-webapp'
+    tags: 'latest'
     command: 'buildAndPush'
     Dockerfile: '**/Dockerfile'
 
