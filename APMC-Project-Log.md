@@ -109,5 +109,19 @@ I adapted the `nginx` sample deployment from a previous lesson.
 
 In [My Azure DevOps account](https://dev.azure.com/apmcazure/), create project `AiCore--DevOps-Course`.
 
-Create a new pipeline, select GitHub, select the relevant AiCore webapp project repo, use the starter pipeline template.
+Create a new pipeline, select GitHub, select the relevant AiCore webapp project repo, use the starter pipeline template. Save the pipeline, creating a `feature/azure-pipeline` branch.
+
+## Docker Hub
+
+My account ⇒ Security ⇒ New Access Token ⇒ `aicore-webapp-project-pipeline`, RWD ⇒ Generate 
+Copy token and save in personal key vault.
+
+## Azure DevOps
+
+Project settings ⇒ Service connections ⇒ New service connection ⇒ Docker registry ⇒ Next ⇒ Docker Hub ⇒   
+Docker ID: docker hub username (not email address)   
+Docker password: the access token created above   
+Service connection name: Something descriptive, e.g. apmc-docker   
+Grant access to all pipelines: Yes
+⇒ Verify and Save
 
