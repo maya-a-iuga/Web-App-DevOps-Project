@@ -27,11 +27,16 @@ steps:
     command: 'apply'
     useConfigurationFile: true
     configuration: 'k8s-webapp/application-manifest.yaml'
-    secretType: 'dockerRegistry'
     containerRegistryType: 'Container Registry'
     dockerRegistryEndpoint: 'apmc-docker'
-    secretName: 'apmc-docker'
 
-- script: |
-    kubectl rollout restart deployment/webapp-deployment
-  displayName: 'Restart Deployment'
+- task: Kubernetes@1
+  inputs:
+    connectionType: 'Kubernetes Service Connection'
+    kubernetesServiceEndpoint: 'aicore-apmc-aks'
+    namespace: 'default'
+    command: 'rollout'
+    arguments: 'restart deployment/webapp-deployment'
+    useConfigurationFile: false
+    containerRegistryType: 'Container Registry'
+    dockerRegistryEndpoint: 'apmc-docker'
