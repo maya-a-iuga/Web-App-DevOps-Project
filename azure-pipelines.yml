@@ -17,9 +17,7 @@ steps:
     repository: 'asoundmove/aicore-devopsproject-webapp'
     command: 'buildAndPush'
     Dockerfile: '**/Dockerfile'
-    tags: |
-      latest
-      $(Build.BuildId)
+    tags: latest
 
 - task: Kubernetes@1
   inputs:
@@ -34,12 +32,6 @@ steps:
     dockerRegistryEndpoint: 'apmc-docker'
     secretName: 'apmc-docker'
 
-
-
-# - script: echo Hello, world!
-#   displayName: 'Run a one-line script'
-
-# - script: |
-#     echo Add other tasks to build, test, and deploy your project.
-#     echo See https://aka.ms/yaml
-#   displayName: 'Run a multi-line script'
+- script: |
+    kubectl rollout restart deployment/webapp-deployment
+  displayName: 'Restart Deployment'
