@@ -29,7 +29,6 @@ steps:
     command: 'rollout'
     useConfigurationFile: true
     configuration: 'k8s-webapp/application-manifest.yaml'
-    arguments: 'restart'
     secretType: 'dockerRegistry'
     containerRegistryType: 'Container Registry'
     dockerRegistryEndpoint: 'apmc-docker'
