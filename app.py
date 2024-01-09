@@ -85,7 +85,7 @@ def add_order():
     product_code = request.form.get('product_code')
     product_quantity = request.form.get('product_quantity')
     order_date = request.form.get('order_date')
-    # shipping_date = request.form.get('shipping_date')
+    shipping_date = request.form.get('shipping_date')
     delivery_date = request.form.get['delivery_date']
     
     # Create a session to interact with the database
