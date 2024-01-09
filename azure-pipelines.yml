@@ -26,7 +26,7 @@ steps:
     connectionType: 'Kubernetes Service Connection'
     kubernetesServiceEndpoint: 'aicore-apmc-aks'
     namespace: 'default'
-    command: 'rollout'
+    command: 'apply'
     useConfigurationFile: true
     configuration: 'k8s-webapp/application-manifest.yaml'
     secretType: 'dockerRegistry'
