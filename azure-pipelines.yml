@@ -10,6 +10,7 @@ pool:
   vmImage: ubuntu-latest
 
 steps:
+
 - task: Docker@2
   inputs:
     containerRegistry: 'apmc-docker'
@@ -19,6 +20,22 @@ steps:
     tags: |
       latest
       $(Build.BuildId)
+
+- task: Kubernetes@1
+  inputs:
+    connectionType: 'Kubernetes Service Connection'
+    kubernetesServiceEndpoint: 'aicore-apmc-aks'
+    namespace: 'default'
+    command: 'rollout'
+    useConfigurationFile: true
+    configuration: 'k8s-webapp/application-manifest.yaml'
+    arguments: 'restart'
+    secretType: 'dockerRegistry'
+    containerRegistryType: 'Container Registry'
+    dockerRegistryEndpoint: 'apmc-docker'
+    secretName: 'apmc-docker'
+
+
 
 # - script: echo Hello, world!
 #   displayName: 'Run a one-line script'
