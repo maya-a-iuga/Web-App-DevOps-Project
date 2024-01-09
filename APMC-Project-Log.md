@@ -125,3 +125,20 @@ Service connection name: Something descriptive, e.g. apmc-docker
 Grant access to all pipelines: Yes
 ⇒ Verify and Save
 
+I hit a few "misreading" issues:   
+- Azure DevOps settings:   
+  Azure DevOps portal ⇒ Account ⇒ Organisation settings ⇒ Billing:   
+  - Set-up billing with the relevant subscription.
+  - Change MS Hosted CI/CD to 2
+- Pipeline yaml:   
+  - the Docker Hub repo includes the username
+  - the build inputs should include tags
+
+After this, I changed the `orders,html` page title to trigger the build, then manually triggered the rollout: `kubectl rollout restart deployment`, refreshed the browser at `${PUBLIC_IP}`, and it showed the updated title 😁
+
+## Kubernetes
+
+Project settings ⇒ Service connections ⇒ New service connection ⇒ Kubernetes
+Select Azure, subscription, cluster and namespace.
+Give it a name, tick admin credentials and apply to all pipelines.
+
