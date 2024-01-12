@@ -1,0 +1,77 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flask-app-deployment
+  labels:
+    app: myflaskapp
+spec:                      # spec: Desired state of deployment
+  replicas: 2                # Support two containers
+  selector:
+    matchLabels:
+      app: flask-app              # Identify containers by tags: app: flask-app
+  template:                  # Template for creating containers
+    metadata:
+      labels:
+        app: flask-app            # Tag containers with app: flask-app
+    spec:                   # spec: Desired state of container
+      containers:
+      - name: flask-app
+        image: paulmayer2731/web-app-devops-project:latest    # Container iage from Docker Hub repo
+        # One or more containers do not have resource limits - this could starve other processes
+        resources:
+          limits:        # Resource no to exceed
+            memory: 512Mi
+            cpu: "1"
+          requests:      # Minimum resource request
+            memory: 256Mi
+            cpu: "0.2"
+        # Resource limits applied to remove linting warning
+        ports:
+        - containerPort: 5000     # Application within container exposed on tis port
+  strategy:
+    type: RollingUpdate           # Rolling update maintains service during update. 
+    rollingUpdate:                # Thus, reducing down-time for stateless applications.
+      maxSurge: 1             # Max one additional container during deployment update
+      maxUnavailable: 1       # Max one terminating container during deployment update
+
+---
+# Network service to allow inter cluster communication by directing traffic to pods
+apiVersion: v1
+kind: Service
+metadata:
+  name: flask-app-service
+spec:
+  selector:
+    app: flask-app  # Maintaining seamless communication within the AKS cluster (all pods tagged flask-app)
+  ports:
+    - protocol: TCP
+      port: 80      # flask-app-service:80 is directed to container:5000
+      targetPort: 5000      # Port on which application is running inside the container
+  type: LoadBalancer   # ClusterIP  # Internal service within the AKS cluster
+
+  # Deploy with:
+  # $ kubectl apply -f application-manifest.yaml
+  # Check deployment with:
+  # $ kubectl get pods
+  # Port forward to check service:
+  # $ kubectl port-forward deployment/flask-app-deployment 8086:5000
+  # Brows to http://localhost:8086  http://127.0.0.1:8086
+  # Test: review order list, add new order.
+
+  # $ kubectl exec -it <pod-name> -n <namespace> -- bash
+  # /app# apt-get update && apt-get install -y curl
+  # /app# curl localhost:5000 or 
+
+  # /app# exit
+  # $ exit
+
+  # External access:
+  # Cluster IP: Exposes the service on an internal IP in the cluster (default service).
+  # NodePort: Superset of ClusterIP. Exposes the service on the same port of each selected node in the cluster. 
+  # LoadBalancer: Superset of NodePort.  Creates an external load balancer in the current cloud and assigns an external IP to the service.
+
+  # To allow global, limitless access, we could provision:
+  # Globaly unique domain names, for use on the internet.
+  # An Azure application-gateway. App gateway configures as Web Application Firewall
+  # An ingress controller (resource defined in .yaml file, to anchor domain names).
+  # Modify NSG to allow ingress from range of authorised users.

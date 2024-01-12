@@ -1,0 +1,6 @@
+*.terraform/
+*.terraform
+*.tfstate
+# Web-App-DevOps-Terraform/networking-module/.terraform/
+# Web-App-DevOps-Terraform/networking-module/.terraform/providers/registry.terraform.io/hashicorp/azurerm/3.85.0/windows_amd64/terraform-provider-azurerm_v3.85.0_x5.exe
+
