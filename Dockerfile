@@ -1,5 +1,6 @@
 # Use an official Python runtime as a parent image
-FROM python:3.8-slim
+# Using a specific image for M1/M2 chip Mac users
+FROM --platform=linux/amd64/v8 public.ecr.aws/docker/library/python:3.9.10-slim-buster
 
 # Set the working directory in the container
 WORKDIR /app
