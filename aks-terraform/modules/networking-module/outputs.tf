@@ -13,7 +13,7 @@ output "worker_node_subnet_id" {
   description = "The ID of the worker node subnet within the VNet."
 }
 
-output "networking_resource_group_name" {
+output "resource_group_name" {
   value = azurerm_resource_group.aks_rg.name
   description = "The name of the Azure Resource Group where the networking resources were provisioned."
 }
