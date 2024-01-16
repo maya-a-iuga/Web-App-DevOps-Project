@@ -53,9 +53,67 @@ To run the application, you simply need to run the `app.py` script in this repos
 
 - **Database:** The application employs an Azure SQL Database as its database system to store order-related data.
 
+
+## Terraform Project Documentation
+
+**Overview**  
+
+Terraform by HashiCorp is an Infrastructure as Code (IaC) tool used for building, changing, and versioning infrastructure safely and efficiently. It supports various cloud providers like Azure, AWS, and Google Cloud. Terraform uses declarative configuration files that describe the desired state of your infrastructure.
+
+**Key Concepts**  
+
+Infrastructure as Code (IaC): Manage infrastructure using configuration files rather than through manual processes.
+
+Providers: Plugins that interact with APIs of cloud providers, services, or other tools (e.g., Azure, AWS).
+Resources: Components of your infrastructure such as virtual networks, compute instances, or higher-level components like DNS records.
+Modules: Reusable, encapsulated Terraform configurations for creating sets of resources that are used together.
+State: Terraform records information about what infrastructure is created in a state file, allowing for consistent management of resources.
+Terraform Workflow
+Initialize:
+
+Run terraform init in your project directory.
+This command sets up Terraform's working directory, downloads providers, and prepares the backend for state storage.
+Writing Configuration:
+
+Define your infrastructure in configuration files (.tf).
+Resources, variables, outputs, and provider configurations are declared here.
+Planning:
+
+Execute terraform plan.
+Terraform reads configuration files and creates an execution plan, detailing what actions it will perform to reach the desired state.
+Applying:
+
+Run terraform apply.
+Terraform will execute the plan to create, update, or delete resources as per the configuration.
+Maintaining State:
+
+Terraform maintains a state file to map resources to the configuration and keep track of metadata.
+The state file is critical for Terraform to function correctly and should be handled with care.
+Modifying Infrastructure:
+
+Update configuration files as needed.
+Rerun terraform plan and terraform apply to implement changes.
+Destroying Infrastructure:
+
+To remove all resources managed by Terraform, use terraform destroy.
+
+**Best Practices**  
+
+Version Control: Keep your Terraform configurations in a version control system (like Git).
+Modularization: Use modules to organize and reuse code.
+Secrets Management: Avoid hardcoding sensitive information. Use environment variables or secret management tools.
+Review Plans: Carefully review execution plans before applying changes.
+
+
+
+
+
+
+
 ## Contributors 
 
 - [Maya Iuga]([https://github.com/yourusername](https://github.com/maya-a-iuga))
+- C.Ugorji (AI core DevOps Student)
 
 ## License
 
