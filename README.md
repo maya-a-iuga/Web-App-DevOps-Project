@@ -53,6 +53,7 @@ To run the application, you simply need to run the `app.py` script in this repos
 
 - **Database:** The application employs an Azure SQL Database as its database system to store order-related data.
 
+   
 
 ## Terraform Project Documentation
 
@@ -105,6 +106,57 @@ Secrets Management: Avoid hardcoding sensitive information. Use environment vari
 Review Plans: Carefully review execution plans before applying changes.
 
 
+## AKS Cluster Provisioning with Terraform
+
+**Overview**
+
+This project automates the deployment of an Azure Kubernetes Service (AKS) cluster using Terraform, an Infrastructure as Code tool. The project is structured into modules, with specific focus on the aks-cluster-module for creating and managing the AKS cluster.
+
+**Prerequisites**  
+
+Azure account and Azure CLI installed and configured
+Terraform v0.12+ installed  
+
+**Module Structure**  
+
+aks-cluster-module: Contains Terraform configurations to set up the AKS cluster in Azure.
+Usage
+
+**Step 1: Initialize the Module**   
+
+Navigate to the aks-cluster-module directory and run the initialization command:
+
+cd modules/aks-cluster-module
+terraform init 
+
+**Step 2: Configuration**  
+
+Edit the variables.tf file to configure the desired settings for your AKS cluster.
+
+**Step 3: Apply the Configuration**  
+
+Run the following commands to apply the configuration:
+
+terraform plan
+terraform apply
+
+### Inputs and Outputs
+
+**Input Variables**  
+
+aks_cluster_name: Name of the AKS cluster.
+cluster_location: Azure region where the AKS cluster will be deployed.
+dns_prefix: DNS prefix for the AKS cluster.
+kubernetes_version: Version of Kubernetes for the AKS cluster.
+service_principal_client_id: Client ID for the service principal.
+service_principal_secret: Client Secret for the service principal.
+Additional networking-related variables.  
+
+**Output Variables**  
+
+aks_cluster_name: The name of the provisioned AKS cluster.
+aks_cluster_id: The ID of the provisioned AKS cluster.
+aks_kubeconfig: Kubernetes configuration file for the AKS cluster.
 
 
 
