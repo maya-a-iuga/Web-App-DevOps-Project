@@ -159,6 +159,41 @@ aks_cluster_id: The ID of the provisioned AKS cluster.
 aks_kubeconfig: Kubernetes configuration file for the AKS cluster.
 
 
+# Infrastructure Provisioning with Terraform
+
+**Overview**  
+
+This project utilizes Terraform for the automated provisioning of infrastructure in Azure, specifically focusing on setting up an Azure Kubernetes Service (AKS) cluster and associated networking resources.
+
+**Infrastructure Components**  
+
+Azure Resource Group: Serves as a logical container for grouping related resources.
+Virtual Network (VNet): Provides networking for AKS, including control plane and worker node subnets.
+Subnets: Two subnets, one for the control plane and one for the worker nodes.
+Network Security Group (NSG): Manages network security rules for secure access to the AKS cluster.
+AKS Cluster: The central Kubernetes cluster managed by Azure.
+Setup and Configuration
+Terraform is used to define and manage the above resources.
+The configuration is divided into modules for better organization and reusability.
+Variables are used to ensure configurability and flexibility of the setup.
+Troubleshooting Steps Undertaken
+Throughout the setup, several issues were encountered and resolved:
+
+Service Principal Authentication: Initially faced issues with Azure Service Principal permissions. Resolved by assigning the appropriate roles to the Service Principal.
+
+Resource Provider Registration: Encountered a MissingSubscriptionRegistration error. This was fixed by manually registering the Microsoft.ContainerService provider with the Azure subscription.
+
+Permission Issues for Resource Group Creation: Faced AuthorizationFailed errors when attempting to create resource groups. This was resolved by ensuring the Service Principal had sufficient permissions.
+
+Namespace Registration: Addressed errors related to the subscription not being registered to use certain Azure services (namespaces).
+
+**Commands Used**  
+
+terraform init: To initialize the Terraform environment.
+terraform plan: To preview the changes before applying.
+terraform apply: To apply the changes and provision the infrastructure.
+Conclusion
+The project demonstrates the power of Infrastructure as Code (IaC) using Terraform, showcasing how complex infrastructure can be provisioned, managed, and troubleshooted systematically.
 
 
 
