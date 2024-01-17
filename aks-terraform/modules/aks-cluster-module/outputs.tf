@@ -1,4 +1,4 @@
-output "aks_cluster_name" {
+output "cluster_name" {
   value       = azurerm_kubernetes_cluster.aks_cluster.name
   description = "The name of the provisioned AKS cluster."
 }

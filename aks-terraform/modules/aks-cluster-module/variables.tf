@@ -1,9 +1,9 @@
-variable "aks_cluster_name" {
+variable "cluster_name" {
   type        = string
   description = "The name of the AKS cluster."
 }
 
-variable "cluster_location" {
+variable "location" {
   type        = string
   description = "The Azure region where the AKS cluster will be deployed."
 }
