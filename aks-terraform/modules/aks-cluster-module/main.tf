@@ -1,7 +1,7 @@
 resource "azurerm_kubernetes_cluster" "aks_cluster" {
-  name                = var.aks_cluster_name
-  location            = var.cluster_location
-  resource_group_name = var.networking_resource_group_name  # Reference the variable here
+  name                = var.cluster_name
+  location            = var.location
+  resource_group_name = var.resource_group_name  # Reference the variable here
   dns_prefix          = var.dns_prefix
   kubernetes_version  = var.kubernetes_version
 
