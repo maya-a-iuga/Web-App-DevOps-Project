@@ -195,7 +195,7 @@ terraform apply: To apply the changes and provision the infrastructure.
 Conclusion
 The project demonstrates the power of Infrastructure as Code (IaC) using Terraform, showcasing how complex infrastructure can be provisioned, managed, and troubleshooted systematically.
 
-## Kubernetes Deployment Documentation  
+# Kubernetes Deployment Documentation  
 
 ### Deployment and Service Manifests**  
 
