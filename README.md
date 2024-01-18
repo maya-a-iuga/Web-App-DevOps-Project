@@ -195,6 +195,55 @@ terraform apply: To apply the changes and provision the infrastructure.
 Conclusion
 The project demonstrates the power of Infrastructure as Code (IaC) using Terraform, showcasing how complex infrastructure can be provisioned, managed, and troubleshooted systematically.
 
+## Kubernetes Deployment Documentation  
+
+### Deployment and Service Manifests**  
+
+This application is deployed on Azure Kubernetes Service (AKS) using Kubernetes manifests. These manifests define the desired state of our application's deployment and service in the cluster.
+
+### Key Components:
+Deployment Manifest: The deployment manifest (deployment.yaml) specifies our application's deployment configuration. It includes the following key settings:
+
+**Pod Template**: Defines the container image to use (chyjuls/web-delivery:v1) and necessary environment variables.
+**Replicas**: Sets the number of pod replicas for high availability.
+**Resource Requests/Limits**: Configures CPU and memory resources for each pod.
+**Readiness and Liveness Probes**: Ensures that the application is running correctly and is ready to receive traffic.
+**Service Manifest**: The service manifest (service.yaml) defines how the application's pods are exposed within the cluster. It includes:
+**Type**: Determines how the service is exposed. For internal use, we use ClusterIP; for external access, LoadBalancer can be used.
+**Port Mapping**: Maps the port from the pod to the service.
+
+### Deployment Strategy  
+
+For our application, we've chosen a rolling update deployment strategy. This approach ensures zero downtime during updates, gradually replacing instances of the older version of our application with the new version.
+
+**Benefits**:
+Zero Downtime: Ensures that the application remains available to users during deployment.
+Rollback Capabilities: Allows for easy rollback to the previous version if issues arise.
+Testing and Validation
+Post-deployment, we conducted several tests to ensure the application's functionality and reliability:
+
+**Connectivity Test**: Verified that the application's pods are accessible and running as expected using kubectl get pods.
+**Functionality Test**: Used port forwarding (kubectl port-forward) to temporarily access the application and test its core functionalities, including the orders table and Add Order feature.  
+
+### Internal and External Access  
+
+**Internal Access**:
+For internal users, the application can be accessed through an internal load balancer or ingress controller within the AKS cluster. This approach allows employees to access the application without exposing it to the public internet.  
+
+We plan to set up an ingress controller that routes internal traffic to the application based on URL paths.  
+
+**External Access**:
+
+To make the application accessible to external users, we can expose it through an external load balancer or ingress controller with proper security measures in place.  
+
+**Key considerations for external access include**:
+- TLS/SSL Certificates: For secure HTTPS access.
+- Authentication and Authorization: To control access to the application.
+- Monitoring and Logging: To track usage and potential security incidents.
+
+
+
+
 
 
 ## Contributors 
