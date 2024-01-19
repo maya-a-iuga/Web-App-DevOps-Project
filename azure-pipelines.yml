@@ -22,7 +22,7 @@ steps:
 - task: Kubernetes@1
   inputs:
     connectionType: 'Azure Resource Manager'
-    azureSubscriptionEndpoint: 'kubernetes_deploh'
+    azureSubscriptionEndpoint: 'kubernetes_deploy'
     azureResourceGroup: 'networking-resource-group>'
     kubernetesCluster: 'terraform-aks-cluster'
     command: 'apply'
