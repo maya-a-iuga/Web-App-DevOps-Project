@@ -13,7 +13,7 @@ steps:
 - task: Docker@2
   inputs:
     containerRegistry: 'Docker Hub'
-    repository: 'mayaaiuga/devops-web-app'
+    repository: 'chyjuls/Web-App-DevOps-Project'
     command: 'buildAndPush'
     Dockerfile: '**/Dockerfile'
     tags: 'latest'
@@ -24,5 +24,5 @@ steps:
     connectionType: 'azureResourceManager'
     azureSubscriptionConnection: 'aks-service-connection'
     azureResourceGroup: 'aks-rg'
-    kubernetesCluster: 'aks-demo'
-    manifests: 'deployment.yaml'
+    kubernetesCluster: 'terraform-aks-cluster'
+    manifests: 'application-manifest.yaml'
