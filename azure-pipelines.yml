@@ -11,9 +11,10 @@ pool:
 
 steps:
 - task: Docker@2
+  displayName: 'Build and Push Docker Image'
   inputs:
-    containerRegistry: 'Docker Hub'
-    repository: 'chyjuls/Web-App-DevOps-Project'
+    containerRegistry: 'chyjuls'
+    repository: 'chyjuls/web-delivery:v1'
     command: 'buildAndPush'
     Dockerfile: '**/Dockerfile'
     tags: 'latest'
