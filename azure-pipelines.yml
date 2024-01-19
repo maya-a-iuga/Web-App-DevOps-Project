@@ -28,6 +28,3 @@ steps:
     command: 'apply'
     arguments: '-f $(System.DefaultWorkingDirectory)/aks-terraform/application-manifest.yaml'
 
-git add azure-pipelines.yml
-git commit -m "Add Deploy to Kubernetes task to pipeline"
-git push
