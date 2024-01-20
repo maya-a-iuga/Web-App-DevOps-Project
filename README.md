@@ -17,7 +17,7 @@ Welcome to the Web App DevOps Project repo! This application allows you to effic
 ![Screenshot 2023-08-31 at 15 48 48](https://github.com/maya-a-iuga/Web-App-DevOps-Project/assets/104773240/3a3bae88-9224-4755-bf62-567beb7bf692)
 
 - **Pagination:** Easily navigate through multiple pages of orders using the built-in pagination feature.
-  
+
 ![Screenshot 2023-08-31 at 15 49 08](https://github.com/maya-a-iuga/Web-App-DevOps-Project/assets/104773240/d92a045d-b568-4695-b2b9-986874b4ed5a)
 
 - **Add New Order:** Fill out a user-friendly form to add new orders to the system with necessary information.
