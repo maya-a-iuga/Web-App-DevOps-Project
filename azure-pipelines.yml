@@ -14,10 +14,10 @@ steps:
   displayName: 'Build and Push Docker Image'
   inputs:
     containerRegistry: 'azure DevOps web-app project'
-    repository: 'chyjuls/web-delivery:v1'
+    repository: 'chyjuls/web-delivery'
     command: 'buildAndPush'
     Dockerfile: '**/Dockerfile'
-    tags: 'latest'
+    tags: 'v1'
 
 - task: Kubernetes@1
   inputs:
