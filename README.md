@@ -60,3 +60,8 @@ To run the application, you simply need to run the `app.py` script in this repos
 ## License
 
 This project is licensed under the MIT License. For more details, refer to the [LICENSE](LICENSE) file.
+
+## Key Features
+
+### Delivery Date
+Allows the specification of a delivery date when adding an order. This ensures that when an order is created, a delivery date can be tagged to the order.
