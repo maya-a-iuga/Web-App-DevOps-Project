@@ -1,6 +1,9 @@
 # Use an official Python runtime as a parent image
 # Using a specific image for M1/M2 chip Mac users
-FROM --platform=linux/amd64/v8 public.ecr.aws/docker/library/python:3.9.10-slim-buster
+ARG ARCH
+FROM ${ARCH}/ubuntu
+FROM python:3.9
+FROM --platform=linux/amd64 public.ecr.aws/docker/library/python:3.9.10-slim-buster
 
 # Set the working directory in the container
 WORKDIR /app
@@ -17,7 +20,7 @@ RUN apt-get update && apt-get install -y \
     wget -qO- https://packages.microsoft.com/config/debian/10/prod.list > /etc/apt/sources.list.d/mssql-release.list && \
     apt-get update && \
     ACCEPT_EULA=Y apt-get install -y msodbcsql18 && \
-    # apt-get purge -y --auto-remove wget && \  
+    # apt-get purge -y --auto-remove wget && \
     apt-get clean
 
 # Install pip and setuptools
