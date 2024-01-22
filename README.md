@@ -243,6 +243,46 @@ To make the application accessible to external users, we can expose it through a
 
 
 
+# CI/CD Pipeline Setup
+
+## Overview
+This project includes a Continuous Integration/Continuous Deployment (CI/CD) pipeline, which automates the process of testing, building, and deploying the application. The pipeline is defined in the azure-pipeline.yaml file and utilizes Azure DevOps for execution.
+
+### azure-pipeline.yaml**  
+
+The azure-pipeline.yaml file defines the pipeline's stages, jobs, and steps. It is structured as follows:
+
+**Trigger**: Specifies the branch(es) that will trigger the pipeline.
+**Variables**: Defines the variables used across the pipeline.
+**Stages**: Organizes the pipeline into distinct stages such as Build, Test, and Deploy.
+**Build Stage**: Compiles the code, runs tests, and builds the Docker image. The image is then pushed to a Docker registry.  
+**Deploy Stage**: Handles the deployment of the built image to the Kubernetes cluster.  
+
+### Kubernetes Manifest File  
+
+The Kubernetes manifest file, located at [path-to-manifest-file], is crucial for the deployment process. It defines the desired state of the application in the Kubernetes cluster. Key components include:
+
+**Deployment**: Specifies the container image to use, the number of replicas, and configuration like environment variables and resource limits.
+**Service**: Defines how the application is exposed within the Kubernetes cluster or to the outside world, like LoadBalancer or NodePort services.  
+
+### CI/CD Pipeline Flow  
+
+**Code Commit**: A commit to the specified branch triggers the pipeline.
+**Build**: The application is built, and a Docker image is created.
+**Test**: Automated tests are run to ensure code reliability.
+**Docker Push**: The Docker image is pushed to the registry.
+**Deployment**: The application is deployed to the AKS cluster using the Kubernetes manifest file.
+**Post-Deployment**: The pipeline performs any post-deployment steps like health checks or notifications.  
+
+### Conclusion
+The CI/CD pipeline ensures that every code change is automatically tested and deployed, maintaining the reliability and stability of the application. This automation streamlines the development process, reduces manual errors, and ensures quicker delivery of features and fixes.
+
+
+
+
+
+
+
 
 
 
