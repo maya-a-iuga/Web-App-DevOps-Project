@@ -197,7 +197,7 @@ The project demonstrates the power of Infrastructure as Code (IaC) using Terrafo
 
 # Kubernetes Deployment Documentation  
 
-### Deployment and Service Manifests**  
+### Deployment and Service Manifests
 
 This application is deployed on Azure Kubernetes Service (AKS) using Kubernetes manifests. These manifests define the desired state of our application's deployment and service in the cluster.
 
