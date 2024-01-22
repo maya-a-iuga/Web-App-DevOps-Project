@@ -22,8 +22,8 @@ steps:
 - task: Kubernetes@1
   inputs:
     connectionType: 'Azure Resource Manager'
-    azureSubscriptionEndpoint: 'kubernetes_deploy'
-    azureResourceGroup: 'networking-resource-group>'
+    azureSubscriptionEndpoint: 'terraform-aks-cluster'
+    azureResourceGroup: 'networking-resource-group'
     kubernetesCluster: 'terraform-aks-cluster'
     command: 'apply'
     arguments: '-f $(System.DefaultWorkingDirectory)/aks-terraform/application-manifest.yaml'
