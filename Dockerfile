@@ -1,7 +1,7 @@
 # Use an official Python runtime as a parent image
 # Using a specific image for M1/M2 chip Mac users
 ARG ARCH
-FROM ${ARCH}/ubuntu
+
 FROM python:3.9
 FROM --platform=linux/amd64 public.ecr.aws/docker/library/python:3.9.10-slim-buster
 
