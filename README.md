@@ -84,11 +84,14 @@ To tag and push the docker image to Docker Hub (where the image can be saved and
 Terraform is used to provide infrastructure as code (IAC) to define and provision the necessary cloud resources on Azure to host the web application on a Kubernetes cluster. This Terraform project is split into two modules, one for defining and managing the cluster and the other for the cluster's networking. The file structure can be seen in detail below.
 
 .
-├── aks-terraform              # main project folder
+├── aks-terraform               # main project folder
+    ├── main.tf                 # defines the resources for the module
+    ├── outputs.tf          §   # defines the outputs from the provisioning of resources
+    ├── variables.tf            # user defined variables to be used in main.tf
     ├── aks-cluster-module
-       ├── main.tf             # defines the resources for the module
-       ├── outputs.tf          # defines the outputs from the provisioning of resources
-       ├── variables.tf        # user defined variables to be used in main.tf
+       ├── main.tf
+       ├── outputs.tf
+       └── variables.tf
     └── networking-module
         ├── main.tf
         ├── outputs.tf
@@ -104,6 +107,11 @@ This module defines the cloud network/platform used to host the Kubernetes clust
 * **Inbound rules:** Network security rules limiting network traffic to only the minimum our application needs for security purposes. This application holds two inbound rule - meaning only inbound traffic of certain specified types can enter the network. These are SSH and communication ot the kube-apiserver
 
 ### AKS clustering module
+This module defines the AKS cluster that will be launched to host the wedb application. For this project, the key elements are:
+
+* **AKS cluster:**  The group of machines (nodes) working together to run our containerized application on Azure
+* **Node pool:** The default number of nodes in a cluster
+* **Service principal:** The authentication required for the network linked with the AKS cluster
 
 ## Key Features
 
