@@ -79,6 +79,32 @@ Once built, to spin up a container instance of the image and run the application
 
 To tag and push the docker image to Docker Hub (where the image can be saved and version controlled by Docker), run `docker tag <name of the image> <docker-hub-username>/<image-name>:<tag>` and then `docker push <docker-hub-username>/<image-name>:<tag>`.
 
+## IAC
+
+Terraform is used to provide infrastructure as code (IAC) to define and provision the necessary cloud resources on Azure to host the web application on a Kubernetes cluster. This Terraform project is split into two modules, one for defining and managing the cluster and the other for the cluster's networking. The file structure can be seen in detail below.
+
+.
+├── aks-terraform              # main project folder
+    ├── aks-cluster-module
+       ├── main.tf             # defines the resources for the module
+       ├── outputs.tf          # defines the outputs from the provisioning of resources
+       ├── variables.tf        # user defined variables to be used in main.tf
+    └── networking-module
+        ├── main.tf
+        ├── outputs.tf
+        └── variables.tf
+
+### Networking module
+This module defines the cloud network/platform used to host the Kubernetes cluster and subsequent web application on Azure's cloud. for this project we have define the following networking resources:
+
+* **Resource group:** Logical grouping of Azure resources for logging, monitoring, billing and group analytics and control
+* **Virtual network:** Cloud-based IP network or platform for the application to run in
+* **Subnet:** Subdivision of the IP network for separation of resources whilst maintaining easy communication when needed. Our application defines one for the AKS control pane and the other for worker nodes
+* **NSG (Network Security group):** Security boundary for inbound and outbound connection rules between different Azurew resources and different requests and communication attempts from outside the apoplication or network
+* **Inbound rules:** Network security rules limiting network traffic to only the minimum our application needs for security purposes. This application holds two inbound rule - meaning only inbound traffic of certain specified types can enter the network. These are SSH and communication ot the kube-apiserver
+
+### AKS clustering module
+
 ## Key Features
 
 ### Delivery Date
