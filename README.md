@@ -1,6 +1,6 @@
 # Web-App-DevOps-Project
 
-Welcome to the Web App DevOps Project repo! This application allows you to efficiently manage and track orders for a potential business. It provides an intuitive user interface for viewing existing orders and adding new ones.
+Welcome to the Web App DevOps Project repo! This application allows you to efficiently manage and track orders for a potential business. It provides an intuitive user interface for viewing existing orders and adding new ones. This is the finally project for AI core students who are on the DevOps pathway.Although the repo is forked, files have been replaced with my personal project files.
 
 ## Table of Contents
 
