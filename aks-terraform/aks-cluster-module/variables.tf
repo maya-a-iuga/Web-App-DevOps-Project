@@ -49,3 +49,8 @@ variable "worker_node_subnet_id" {
   description = "ID of the worker node subnet within the VNet."
   type        = string
 }
+
+variable "aks_nsg_id" {
+  description = "ID of NSG"
+  type        = string
+}

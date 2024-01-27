@@ -1,5 +1,24 @@
+terraform {
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+      version = "=3.89.0"
+    }
+  }
+}
+
+# Configure the Microsoft Azure Provider
+provider "azurerm" {
+  features {}
+}
+
 module "networking_module" {
   source = "./networking-module"
+
+  # Input variables for the AKS networking module
+  resource_group_name = "networking-resource-group"
+  location            = "UK South"
+  vnet_address_space  = ["10.0.0.0/16"]
 }
 
 module "aks_cluster_module" {
@@ -14,9 +33,10 @@ module "aks_cluster_module" {
   service_principal_secret    = var.service_principal_secret
 
   # Input variables referencing outputs from the networking module
-  resource_group_name     = networking_module.Output.networking_resource_group_name
-  vnet_id                 = networking_module.Output.vnet_id
-  control_plane_subnet_id = networking_module.Output.control_plane_subnet_id
-  worker_node_subnet_id   = networking_module.Output.worker_node_subnet_id
+  resource_group_name     = module.networking_module.networking_resource_group_name
+  vnet_id                 = module.networking_module.vnet_id
+  control_plane_subnet_id = module.networking_module.control_plane_subnet_id
+  worker_node_subnet_id   = module.networking_module.worker_node_subnet_id
+  aks_nsg_id              = module.networking_module.aks_nsg_id
 
 }
