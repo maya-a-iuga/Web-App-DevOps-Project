@@ -47,7 +47,6 @@ class Order(Base):
     order_date = Column('Order Date', DateTime)
     shipping_date = Column('Shipping Date', DateTime)
     delivery_date = Column('Delivery Date', DateTime)
-
 # define routes
 # route to display orders
 @app.route('/')
