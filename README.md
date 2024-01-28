@@ -278,10 +278,55 @@ The Kubernetes manifest file, located at [path-to-manifest-file], is crucial for
 The CI/CD pipeline ensures that every code change is automatically tested and deployed, maintaining the reliability and stability of the application. This automation streamlines the development process, reduces manual errors, and ensures quicker delivery of features and fixes.
 
 
+    
+# Monitoring Strategy for AKS Cluster    
 
 
+## Metrics Explorer Charts
+The AKS cluster monitoring utilizes Azure Monitor's Metrics Explorer to visualize key performance indicators. Below are the specific charts utilized, their significance, and interpretation guidelines:
+
+1. Average Node CPU Usage
+   
+**Significance**: This chart tracks the CPU usage across all nodes, providing insights into the computational load and identifying potential bottlenecks.
+**Metrics Tracked**: CPU utilization percentage.
+Interpretation: Values nearing 100% indicate high CPU load, suggesting the need for scaling or optimization.
+
+2. Average Node Memory Usage
+   
+**Significance**: Monitors memory consumption, crucial for ensuring applications have sufficient resources and for detecting memory leaks.
+**Metrics Tracked**: Memory utilization percentage.
+Interpretation: High memory usage close to the node capacity may require scaling or investigating potential memory leaks.
+
+3. Pod Count by Phase
+   
+**Significance**: Offers a snapshot of pod distribution by their lifecycle phase, useful for understanding cluster workload and deployment health.
+**Metrics Tracked**: Count of pods in phases like Running, Pending, Failed, etc.
+Interpretation: An unusual increase in Pending or Failed pods may indicate issues with scheduling or application errors.
+
+## Log Analytics  
+
+Azure Log Analytics is used  to parse and analyze logs from the AKS cluster. Key logs include:
+
+1. Node and Pod Logs
+**Content**: Include metrics on operations, performance, and errors at both the node and pod levels.
+**Relevance**: Helps in diagnosing system-level and application-level issues.
+
+2. Container Logs
+**Content**: Capture stdout and stderr from containers, including application logs.
+**Relevance**: Critical for troubleshooting application-specific issues.
 
 
+## Alarm Configurations
+
+1. CPU Usage Alarm
+**Condition**: Triggered when CPU usage exceeds 80% for over 5 minutes.
+**Threshold**: >80% CPU utilization.
+**Response Strategy**: Investigate running pods and services for optimization or scale up the cluster.
+
+2. Memory Usage Alarm
+**Condition**: Fires when memory usage surpasses 80% for a continuous 5-minute window.
+**Threshold**: >80% memory utilization.
+**Response Strategy**: Check for memory-intensive applications, consider scaling or optimizing pod configurations.
 
 
 
