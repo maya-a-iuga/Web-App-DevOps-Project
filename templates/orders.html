@@ -17,7 +17,7 @@
         <div class="content" id="order-list-content">
             <h2 class="tab-title">Order List</h2>
             <table class="order-table">
-                <thead>
+                <table>
                     <tr>
                         <th>Date UUID</th>
                         <th>User ID</th>
@@ -29,8 +29,6 @@
                         <th>Shipping Date</th>
                         <th>Delivery Date</th>
                     </tr>
-                </thead>
-                <tbody>
                     {% for order in orders %}
                         <tr>
                             <td>{{ order.date_uuid }}</td>
@@ -44,7 +42,6 @@
                             <td>{{ order.delivery_date }}</td>
                         </tr>
                     {% endfor %}
-                </tbody>
             </table>
             <div class="pagination">
                 {% if page > 1 %}
