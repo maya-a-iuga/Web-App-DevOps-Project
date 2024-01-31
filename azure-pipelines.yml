@@ -13,10 +13,10 @@ steps:
 - task: Docker@2
   inputs:
     containerRegistry: 'Docker Hub'
-    repository: 'mayaaiuga/devops-web-app'
+    repository: 'chyjuls/web-delivery'
     command: 'buildAndPush'
     Dockerfile: '**/Dockerfile'
-    tags: 'latest'
+    tags: 'v2.0'
 
 - task: KubernetesManifest@1
   inputs:
