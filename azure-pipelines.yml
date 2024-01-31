@@ -16,7 +16,7 @@ steps:
     repository: 'chyjuls/web-delivery'
     command: 'buildAndPush'
     Dockerfile: '**/Dockerfile'
-    tags: 'v2.0'
+    tags: 'latest'
 
 - task: KubernetesManifest@1
   inputs:
