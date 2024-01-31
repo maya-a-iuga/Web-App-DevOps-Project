@@ -1,3 +1,5 @@
+azure-identity
+azure-keyvault-secrets
 flask==2.2.2
 pyodbc==4.0.39
 SQLAlchemy==2.0.21

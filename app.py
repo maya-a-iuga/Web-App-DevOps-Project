@@ -5,19 +5,32 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import create_engine
 import pyodbc
 import os
+from azure.identity import DefaultAzureCredential
+from azure.keyvault.secrets import SecretClient
+
 
 # Initialise Flask App
 app = Flask(__name__)
 
 # database connection 
-server = 'devops-project-server.database.windows.net'
-database = 'orders-db'
-username = 'maya'
-password = 'AiCore1237'
-driver= '{ODBC Driver 18 for SQL Server}'
+
+# Azure Key Vault settings
+
+
+kv_uri = "https://chy01245vault.vault.azure.net/"
+
+credential = DefaultAzureCredential()
+client = SecretClient(vault_url=kv_uri, credential=credential)
+
+# Retrieve secrets from Azure Key Vault
+server = client.get_secret("server-name").value
+database = client.get_secret("database-name").value
+username = client.get_secret("username").value
+password = client.get_secret("database-password").value
+driver = '{ODBC Driver 18 for SQL Server}'
 
 # Create the connection string
-connection_string=f'Driver={driver};\
+connection_string = f'Driver={driver};\
     Server=tcp:{server},1433;\
     Database={database};\
     Uid={username};\
@@ -36,6 +49,7 @@ Session = sessionmaker(bind=engine)
 # Define the Order data model
 Base = declarative_base()
 
+
 class Order(Base):
     __tablename__ = 'orders'
     date_uuid = Column('date_uuid', String, primary_key=True)
@@ -47,11 +61,11 @@ class Order(Base):
     order_date = Column('Order Date', DateTime)
     shipping_date = Column('Shipping Date', DateTime)
 
+
 # define routes
-# route to display orders
+#  to display orders
 @app.route('/')
 def display_orders():
-
     page = int(request.args.get('page', 1))
     rows_per_page = 25
 
@@ -63,7 +77,8 @@ def display_orders():
     session = Session()
 
     # Fetch a subset of data for the current page
-    current_page_orders = session.query(Order).order_by(Order.user_id, Order.date_uuid).slice(start_index, end_index).all()
+    current_page_orders = session.query(Order).order_by(Order.user_id, Order.date_uuid).slice(start_index,
+                                                                                              end_index).all()
 
     # Calculate the total number of pages
     total_rows = session.query(Order).count()
@@ -73,6 +88,7 @@ def display_orders():
     session.close()
 
     return render_template('orders.html', orders=current_page_orders, page=page, total_pages=total_pages)
+
 
 # route to add orders
 @app.route('/add_order', methods=['POST'])
@@ -85,7 +101,7 @@ def add_order():
     product_quantity = request.form.get('product_quantity')
     order_date = request.form.get('order_date')
     shipping_date = request.form.get('shipping_date')
-    
+
     # Create a session to interact with the database
     session = Session()
 
@@ -106,6 +122,7 @@ def add_order():
     session.commit()
 
     return redirect(url_for('display_orders'))
+
 
 # run the app
 if __name__ == '__main__':
