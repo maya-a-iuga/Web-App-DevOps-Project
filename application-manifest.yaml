@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: flask-app
-        image: chyjuls/web-delivery:v2.0
+        image: chyjuls/web-delivery:latest
         ports:
         - containerPort: 5000
   strategy:
