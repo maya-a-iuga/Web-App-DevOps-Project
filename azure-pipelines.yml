@@ -23,6 +23,7 @@ steps:
 - task: KubernetesManifest@1
   inputs:
       action: 'deploy'
+      rolloutStatusTimeout: 60s
       connectionType: 'azureResourceManager'
       azureSubscriptionConnection: 'Chinyere Ugorji DevOps(9b6d204f-381b-4e09-8ce3-b10cfc7a5a4f)'
       azureResourceGroup: 'networking-resource-group'
