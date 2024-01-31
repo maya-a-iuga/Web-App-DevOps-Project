@@ -16,8 +16,8 @@ app = Flask(__name__)
 
 # Azure Key Vault settings
 
-key_vault_name = os.environ["Chy01245Vault"]
-kv_uri = f"https://{key_vault_name}.vault.azure.net"
+
+kv_uri = "https://chy01245vault.vault.azure.net/"
 
 credential = DefaultAzureCredential()
 client = SecretClient(vault_url=kv_uri, credential=credential)
