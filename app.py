@@ -39,7 +39,7 @@ Base = declarative_base()
 class Order(Base):
     __tablename__ = 'orders'
     date_uuid = Column('date_uuid', String, primary_key=True)
-    delivery_date = Column('Delivery Date', DateTime)
+    delivery_date = column('Delivery Date', DateTime)
     user_id = Column('User ID', String, primary_key=True)
     card_number = Column('Card Number', String)
     store_code = Column('Store Code', String)
