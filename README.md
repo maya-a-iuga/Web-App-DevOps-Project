@@ -26,6 +26,8 @@ Welcome to the Web App DevOps Project repo! This application allows you to effic
 
 - **Data Validation:** Ensure data accuracy and completeness with required fields, date restrictions, and card number validation.
 
+- **Recent Changes:** Added 'Delivery Date' column to the order list and subseqently reverted back to the original version. Code changes were made to the `app.py` file and the `order_list.html` file and can be found in the `commit` history.
+
 ## Getting Started
 
 ### Prerequisites
