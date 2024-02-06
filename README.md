@@ -26,6 +26,9 @@ Welcome to the Web App DevOps Project repo! This application allows you to effic
 
 - **Data Validation:** Ensure data accuracy and completeness with required fields, date restrictions, and card number validation.
 
+- **Additional feature (delivery date):** It may be possible to add an additonal column for delivery date 
+
+-  
 ## Getting Started
 
 ### Prerequisites
@@ -60,3 +63,5 @@ To run the application, you simply need to run the `app.py` script in this repos
 ## License
 
 This project is licensed under the MIT License. For more details, refer to the [LICENSE](LICENSE) file.
+
+
