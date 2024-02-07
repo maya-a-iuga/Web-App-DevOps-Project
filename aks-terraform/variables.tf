@@ -1,11 +1,35 @@
-variable "service_principal_client_id" {
-  description = "Client ID for the service principal associated with the cluster."
-  default     = "6f91d123-0d0e-49f4-a9a3-0573d8ada364"
+variable "subscription_id" {
+  description = "Subscription ID for Azure."
   type        = string
+  sensitive   = false
+}
+
+variable "tenant_id" {
+  description = "Tenant ID for Azure user."
+  type        = string
+  sensitive   = false
+}
+
+variable "client_id" {
+  description = "Client ID (application ID) for the service principal associated with the cluster."
+  type        = string
+  sensitive   = true
+}
+
+variable "client_secret" {
+  description = "Client Secret for the service principal."
+  type        = string
+  sensitive   = true
+}
+
+variable "service_principal_client_id" {
+  description = "Service principal ID (Object ID) for the service principal associated with the cluster."
+  type        = string
+  sensitive   = true
 }
 
 variable "service_principal_secret" {
   description = "Client Secret for the service principal."
-  default     = "e564e5ec-94be-4bf6-94b0-6bbceee888cb"
   type        = string
+  sensitive   = true
 }

@@ -15,7 +15,7 @@ output "worker_node_subnet_id" {
 
 output "networking_resource_group_name" {
   description = "Name of the Azure Resource Group where the networking resources were provisioned in. Ensures the cluster module resources are provisioned within the same resource group."
-  value       = azurerm_network_security_group.aks-ng.name
+  value       = azurerm_resource_group.aks_networking.name
 }
 
 output "aks_nsg_id" {
