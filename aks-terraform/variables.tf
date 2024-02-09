@@ -21,15 +21,3 @@ variable "client_secret" {
   type        = string
   sensitive   = true
 }
-
-variable "service_principal_client_id" {
-  description = "Service principal ID (Object ID) for the service principal associated with the cluster."
-  type        = string
-  sensitive   = true
-}
-
-variable "service_principal_secret" {
-  description = "Client Secret for the service principal."
-  type        = string
-  sensitive   = true
-}
