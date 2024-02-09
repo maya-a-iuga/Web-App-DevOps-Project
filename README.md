@@ -113,7 +113,22 @@ This module defines the AKS cluster that will be launched to host the wedb appli
 * **Node pool:** The default number of nodes in a cluster
 * **Service principal:** The authentication required for the network linked with the AKS cluster
 
-## Key Features
+### Setting up permissions
+When using terraform to create the necessary resources, we need to first log in to the Azure CLI using:
+`az login --tenant <azure_tenant> --allow-no-subscriptions`. This will provide us with our SubscriptionId and TenantId required to set up our azurerm provider. The JSON response we get back in our command line will list these under "id" and "tenantId" respectively. Running `az account list --output table` Will show all accounts and their relevant IDs to allow you to check you are using the correct IDs. You may also run `az account set --subscription <subscriptionId>` if you wish to ensure your Azure CLI is referencing the correct account going forward.
+
+We can then run az ad sp create-for-rbac -`-name <choose_name> --role contributor --scopes /subscriptions/{your-subscription-id}` to create a new app registration. This will provide an Application (client) ID and Client Secret required to create the resource group and associated resources using Terraform. After this has been created, you will receive another JSON response to you command line, inclusing the "appId" (Client ID), "password" (Client Secret), "displayName" (the name of your registration) and "tenant" (your tenant ID - you should already have this).
+
+Finally, you can add the following variables to your main.tf file under your azurerm provider block: client_id, client_secret, subscription_id and tenant_id. These should be taken from defined variables in your variables.tf file and can be automatically brought in when running terraform apply via your .zshrc file. This file should include set terraform variables in the following format: `export TF_VAR_variable_name_in_terraform_variables_file="<azure ID or secret>"`. Ensure to run `source .zshrc` after editing the file.
+
+### Creating the resources with Terraform
+Once permissions have been created and added to your .zshrc file, you can run `terraform init` in each module and main foolder in terraform to initialise the modules and main file path. Then  run `terraform plan` and finally `terraform apply` to provision the required resources.
+
+Now retrieve the kubeconfig file via: `az aks get-credentials --resource-group <your-resource-group> --name <your-aks-cluster-name>` in the command line. This will return the message `Merged "<aks cluster name>" as current context in /Users/<user name>/.kube/config`. Running `kubectl config get-contexts` will confirm the existence of the cluster locally.
+
+## Kubernetes deployment to AKS
+To create and deploy the kubernetes cluster to your provisioned AKS resources on Azure, run `kubectl apply -f <absolute file path to manifest.yaml file>`. To check this has worked and view all pods, run `kubectl get pods -w`. Finally, to access the webapplication, port forward into the application using: `kubectl port-forward flask-app-deployment-67f878f7db-g2z76 5001:5001` and going to this address in your web browser: http://127.0.0.1:5000
+
 
 ### Delivery Date
 Allows the specification of a delivery date when adding an order. This ensures that when an order is created, a delivery date can be tagged to the order.
