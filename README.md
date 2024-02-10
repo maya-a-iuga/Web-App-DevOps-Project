@@ -4,11 +4,15 @@ Welcome to the Web App DevOps Project repo! This application allows you to effic
 
 ## Table of Contents
 
-- [Features](#features)
-- [Getting Started](#getting-started)
-- [Technology Stack](#technology-stack)
-- [Contributors](#contributors)
-- [License](#license)
+- [Web-App-DevOps-Project](#web-app-devops-project)
+  - [Table of Contents](#table-of-contents)
+  - [Features](#features)
+  - [Getting Started](#getting-started)
+    - [Prerequisites](#prerequisites)
+    - [Usage](#usage)
+  - [Technology Stack](#technology-stack)
+  - [Contributors](#contributors)
+  - [License](#license)
 
 ## Features
 
