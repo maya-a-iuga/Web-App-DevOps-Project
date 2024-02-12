@@ -16,5 +16,5 @@ steps:
     containerRegistry: 'Docker Hub'
     repository: 'ndm621/web-app-img'
     command: 'buildAndPush'
-    Dockerfile: '**/dockerfile'
+    Dockerfile: '**/Dockerfile'
     tags: 'latest'
