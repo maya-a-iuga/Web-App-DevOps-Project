@@ -1,0 +1,24 @@
+# Starter pipeline
+
+trigger:
+- main
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+- task: Docker@2
+  inputs:
+    containerRegistry: 'DockerHub-AuthToken'
+    repository: 'robinwinters/web-app-image'
+    command: 'buildAndPush'
+    Dockerfile: '**/Dockerfile'
+    tags: |
+      latest
+
+- task: KubernetesManifest@1
+  inputs:
+    action: 'deploy'
+    connectionType: 'kubernetesServiceConnection'
+    kubernetesServiceConnection: 'DevOps-AKS-Integration'
+    manifests: 'application-manifest.yaml'
