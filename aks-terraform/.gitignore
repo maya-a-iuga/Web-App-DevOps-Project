@@ -1,0 +1,6 @@
+#files not to be tracked
+aks-terraform/terraform.tfstate
+
+aks-terraform/networking-module/.terraform 
+
+aks-terraform/aks-cluster-module/.terraform/providers/registry.terraform.io/hashicorp/azurerm/3.91.0/darwin_arm64

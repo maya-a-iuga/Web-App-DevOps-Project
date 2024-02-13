@@ -12,7 +12,7 @@ variable "location" {
 }
 
 variable "vnet_address_space" {
-    default = ["10.0.0/24"]
+    default = ["10.0.0.0/16"]
     type = list(string)
     description = "ip address of virtual network"
 }
