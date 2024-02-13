@@ -1,5 +1,5 @@
 variable "resource_group_name" {
-    default = "aks-terraform-network"
+    default = "networking-rg"
     type = string
     description = "the name of resource group"  
 }
