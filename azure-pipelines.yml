@@ -12,8 +12,8 @@ pool:
 steps:
 - task: Docker@2
   inputs:
-    containerRegistry: 'Docker Hub'
-    repository: 'samiaaax/webapp-devops'
+    containerRegistry: 'Docker Hub Service Connection'
+    repository: 'samiaaax/web-app'
     command: 'buildAndPush'
     Dockerfile: '**/Dockerfile'
-    tags: 'latest'
+    tags: '1.0'
