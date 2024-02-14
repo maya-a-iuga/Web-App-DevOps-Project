@@ -12,7 +12,7 @@ pool:
 steps:
 - task: Docker@2
   inputs:
-    containerRegistry: 'Docker Hub Service Connection'
+    containerRegistry: 'Docker Hub'
     repository: 'samiaaax/webapp-devops'
     command: 'buildAndPush'
     Dockerfile: '**/Dockerfile'
