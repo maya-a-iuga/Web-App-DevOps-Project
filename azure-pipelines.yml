@@ -26,4 +26,4 @@ steps:
     azureResourceGroup: 'networking-rg'
     kubernetesCluster: 'terraform-aks-cluster'
     useClusterAdmin: true
-    manifests: 'application-manifest.yaml'
+    manifests: './aka-terraform/application-manifest.yaml'
