@@ -16,4 +16,4 @@ steps:
     repository: 'samiaaax/web-app'
     command: 'buildAndPush'
     Dockerfile: '**/Dockerfile'
-    tags: '1.0'
+    tags: 'latest'
