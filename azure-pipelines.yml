@@ -10,10 +10,23 @@ pool:
   vmImage: ubuntu-latest
 
 steps:
+
 - task: Docker@2
   inputs:
     containerRegistry: 'Docker Hub Service Connection'
     repository: 'samiaaax/web-app'
-    command: 'buildAndPush'
+    command: 'build'
     Dockerfile: '**/Dockerfile'
     tags: 'latest'
+    arguments: '--platform=linux/amd64'
+- task: Docker@2
+  inputs:
+    containerRegistry: 'Docker Hub Service Connection'
+    repository: 'samiaaax/web-app'
+    command: 'push'
+    tags: 'latest'
+  
+
+  
+
+    
