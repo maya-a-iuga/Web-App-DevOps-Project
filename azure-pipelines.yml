@@ -8,25 +8,13 @@ trigger:
 
 pool:
   vmImage: ubuntu-latest
+  parallel: 1
 
 steps:
-
 - task: Docker@2
   inputs:
     containerRegistry: 'Docker Hub Service Connection'
-    repository: 'samiaaax/web-app'
-    command: 'build'
+    repository: 'samiaaax/webapp-devops'
+    command: 'buildAndPush'
     Dockerfile: '**/Dockerfile'
     tags: 'latest'
-    arguments: '--platform=linux/amd64'
-- task: Docker@2
-  inputs:
-    containerRegistry: 'Docker Hub Service Connection'
-    repository: 'samiaaax/web-app'
-    command: 'push'
-    tags: 'latest'
-  
-
-  
-
-    
