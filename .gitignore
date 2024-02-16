@@ -1,0 +1,12 @@
+# Virtual environment
+venv/
+
+# Python compiled files
+*.pyc
+__pycache__/
+
+# Flask specific files
+flask/
+
+*.terraform/
+*terraform.tfstate
