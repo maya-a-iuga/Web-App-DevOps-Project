@@ -28,29 +28,29 @@ Welcome to the Web App DevOps Project repo! This application allows you to effic
 
  ## New 'Delivery Date' Feature
 
-**Overview**
+**Overview**<br />
 The delivery date feature is a new functionality added to the company's internal application. This feature allows the addition of a new field in the delivery tracking software. Although the feature has been reverted for the time being, its functionality is documented here for potential future reimplementation.
 
-**Purpose**
+**Purpose**<br />
 The delivery date function is intended to improve delivery management within the company's internal application in terms of accuracy and efficiency. Delivery dates can be added to the tracking system to help users better plan and track order fulfilment, leading to improved customer satisfaction and operational effectiveness.
 
-**Backend Integration**
+**Backend Integration**<br />
 To store delivery dates for orders, a new column called delivery_date has been incorporated in the backend Azure SQL Database.
 
-**Usage**
-*End Users*
-Adding a Delivery Date to an Order
+**Usage**<br />
+*End Users*<br />
+Adding a Delivery Date to an Order<br />
 1.	Navigate to the Add New Order page within the application.
 2.	Fill in the necessary order details, including product information and customer details.
 3.	Locate the "Delivery Date" field and select or enter the desired delivery date.
-4.	Complete the order creation by pressing ‘Add Order’.
-Viewing Delivery Date for an Order
+4.	Complete the order creation by pressing ‘Add Order’.<br />
+Viewing Delivery Date for an Order<br />
 1.	Navigate to the Order List page within the application.
 2.	Look for the "Delivery Date" field to view the scheduled delivery date for the order.
-*Developers*
-Database Interaction
-When interacting with the backend database, developers should ensure that the delivery_date column is properly handled in SQL queries and data manipulation operations.
-Conclusion
+*Developers*<br />
+Database Interaction<br />
+When interacting with the backend database, developers should ensure that the delivery_date column is properly handled in SQL queries and data manipulation operations.<br />
+Conclusion<br />
 The delivery date feature enhances the company's internal application by allowing users to track and manage delivery dates for orders efficiently. By following the outlined guidelines, both end users and developers can leverage this functionality effectively to streamline order fulfilment processes and improve overall operational efficiency.
 
 
