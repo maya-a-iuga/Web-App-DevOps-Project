@@ -25,14 +25,18 @@ Welcome to the Web App DevOps Project repo! This application allows you to effic
 ![Screenshot 2023-08-31 at 15 49 26](https://github.com/maya-a-iuga/Web-App-DevOps-Project/assets/104773240/83236d79-6212-4fc3-afa3-3cee88354b1a)
 
 - **Data Validation:** Ensure data accuracy and completeness with required fields, date restrictions, and card number validation.
-- 
-- ## New 'Delivery Date' Feature
-- **Overview**
+
+ ## New 'Delivery Date' Feature
+
+**Overview**
 The delivery date feature is a new functionality added to the company's internal application. This feature allows the addition of a new field in the delivery tracking software. Although the feature has been reverted for the time being, its functionality is documented here for potential future reimplementation.
+
 **Purpose**
 The delivery date function is intended to improve delivery management within the company's internal application in terms of accuracy and efficiency. Delivery dates can be added to the tracking system to help users better plan and track order fulfilment, leading to improved customer satisfaction and operational effectiveness.
+
 **Backend Integration**
 To store delivery dates for orders, a new column called delivery_date has been incorporated in the backend Azure SQL Database.
+
 **Usage**
 *End Users*
 Adding a Delivery Date to an Order
