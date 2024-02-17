@@ -1,7 +1,8 @@
-FROM python:3.8-slim
+FROM --platform=linux/amd64 python:3.8-slim
 WORKDIR /app
-COPY . .
-RUN unixodbc unixodbc-dev odbcinst odbcinst1debian2 libpq-dev gcc && \
+COPY . /app
+RUN apt-get update && apt-get install -y \
+    unixodbc unixodbc-dev odbcinst odbcinst1debian2 libpq-dev gcc && \
     apt-get install -y gnupg && \
     apt-get install -y wget && \
     wget -qO- https://packages.microsoft.com/keys/microsoft.asc | apt-key add - && \
@@ -12,5 +13,5 @@ RUN unixodbc unixodbc-dev odbcinst odbcinst1debian2 libpq-dev gcc && \
     apt-get clean
 RUN pip install --upgrade pip setuptools
 RUN pip install --trusted-host pypi.python.org -r requirements.txt 
-EXPOSE 5000 
+EXPOSE 5001
 CMD ["python", "app.py"]
