@@ -36,6 +36,8 @@ For the application to succesfully run, you need to install the following packag
 - pyodbc (version 4.0.39)
 - SQLAlchemy (version 2.0.21)
 - werkzeug (version 2.2.3)
+- azure-identity
+- azure-keyvault-secrets
 
 ### Usage
 
@@ -53,9 +55,41 @@ To run the application, you simply need to run the `app.py` script in this repos
 
 - **Database:** The application employs an Azure SQL Database as its database system to store order-related data.
 
+## Developer Inforamtion
+
+** Future Modifications **
+** Delivery Date:** Any new feature to be added in future will need to modify code in both the app.py and orders.html files. For example, Delivery Date feature can be added by by modifying the order class, @app_route and new_order sections in the app.py. Also Delivery Date will need to be added to the order.html in the table and form elements.
+
+** Containerization Process **
+Containerization involves:
+- Creating a Docker File where base image, work directory, required libraries and dependencies and necessary commands are listed
+- Building Docker Image using the Docker File
+  docker build -t <image-name>
+- Run the Docker Image to test all the features
+  docker run -p 5000:5000 <image-name>
+- Tag and Push the image to the Docker Hub
+  docker tag <image-name> docker-user-name>/<image-name-in-Docker>:tag
+- Verify the Docker Hub Image by pulling it from the hub
+- Cleanup
+  Romove Containers
+  docker ps -a
+  docker rm <container-id>
+
+  Remove Images
+  docker images -a
+  docker rmi <image-id>
+
+** Infrastructure as Code IaC **
+The folder aka-terraform has all the necessary files to provision the resources on the Kubernetes and then to AKS. These details include the following:
+- Terraform Modules
+- Cluster Module
+- Networking Modules
+- Input and Output Variables
+
 ## Contributors 
 
 - [Maya Iuga]([https://github.com/yourusername](https://github.com/maya-a-iuga))
+- [Muhammad Nadeem Khan]([https://github.com/ndm621](https://github.com/ndm621))
 
 ## License
 
