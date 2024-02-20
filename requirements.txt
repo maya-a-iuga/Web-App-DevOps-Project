@@ -1,4 +1,6 @@
 flask==2.2.2
 pyodbc==4.0.39
 SQLAlchemy==2.0.21
-werkzeug===2.2.3 
+werkzeug===2.2.3
+azure-identity
+azure-keyvault-secrets
