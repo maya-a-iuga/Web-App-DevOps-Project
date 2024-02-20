@@ -9,6 +9,33 @@ import os
 # Initialise Flask App
 app = Flask(__name__)
 
+from azure.identity import ManagedIdentityCredential
+from azure.keyvault.secrets import SecretClient
+
+# Replace these values with your Key Vault details
+
+key_vault_name = 'key-vault-samia'
+key_vault_url = f"https://key-vault-samia.vault.azure.net/"
+
+# Set up Azure Key Vault client with Managed Identity
+credential = ManagedIdentityCredential()
+secret_client = SecretClient(vault_url=key_vault_url, credential=credential)
+
+# Access the secret values from Key Vault
+secret_name1 = "database-name-secret"
+secret1 = secret_client.get_secret(secret_name1)
+
+secret_name2 = "server-name-secret"
+secret2 = secret_client.get_secret(secret_name2)
+
+secret_name3 = "server-password-secret"
+secret3 = secret_client.get_secret(secret_name3)
+
+secret_name4 = "server-username-secret"
+secret4 = secret_client.get_secret(secret_name4)
+
+
+
 # database connection 
 server = 'devops-project-server.database.windows.net'
 database = 'orders-db'
@@ -109,4 +136,6 @@ def add_order():
 
 # run the app
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000, debug=True)
+    app.run(host='0.0.0.0', port=5001, debug=True)
+
+
