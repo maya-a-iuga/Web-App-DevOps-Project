@@ -17,7 +17,7 @@ steps:
     repository: 'samiaaax/webapp-devops'
     command: 'buildAndPush'
     Dockerfile: '**/Dockerfile'
-    tags: 'latest'
+    tags: '2.0'
 - task: KubernetesManifest@1
   inputs:
     action: 'deploy'
