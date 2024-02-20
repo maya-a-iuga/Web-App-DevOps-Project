@@ -56,7 +56,7 @@ To run the application, you simply need to run the `app.py` script in this repos
 
 - **Database:** The application employs an Azure SQL Database as its database system to store order-related data.
 
-## Developer Inforamtion
+## Developer Information
 
 - **Future Modifications:**
 Any new feature to be added in future will need to modify code in both the app.py and orders.html files. For example, Delivery Date feature can be added by by modifying the order class, @app_route and new_order sections in the app.py. Also Delivery Date will need to be added to the order.html in the table and form elements.
