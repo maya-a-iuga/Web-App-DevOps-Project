@@ -11,7 +11,7 @@ RUN apt-get update && apt-get install -y \
     ACCEPT_EULA=Y apt-get install -y msodbcsql18 && \
     apt-get purge -y --auto-remove wget && \  
     apt-get clean
-RUN pip install --upgrade pip setuptools
+RUN pip install --no-cache-dir -r requirements.txt
 RUN pip install --trusted-host pypi.python.org -r requirements.txt 
 EXPOSE 5001
 CMD ["python", "app.py"]
