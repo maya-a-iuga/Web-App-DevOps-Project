@@ -2,6 +2,10 @@ aks-terraform/networking-module/.terraform/providers/registry.terraform.io/hashi
 aks-terraform/aks-cluster-module/.terraform/providers/registry.terraform.io/hashicorp/azurerm/3.93.0/windows_amd64/terraform-provider-azurerm_v3.93.0_x5.exe
 aks-terraform\.terraform
 aks-terraform\terraform.tfstate
+<<<<<<< HEAD
 aks-terraform\terraform.tfstate.backup
 *.terraform/
 *terraform.tfstate
+=======
+aks-terraform\terraform.tfstate.backup
+>>>>>>> 2883f1ad0f0d21ca803af5da3b6cc875a7ce29fd

@@ -154,7 +154,30 @@ This documentation outlines the process of defining networking services using In
 1. **Define Output Variables**: Create an *outputs.tf* file to define output variables for the networking module. These variables include vnet_id, control_plane_subnet_id, worker_node_subnet_id, networking_resource_group_name, and aks_nsg_id.
 1.**Initialize the Networking Module**: In the *networking-module* run the terraform initialization command. This initializes the networking module, making it ready for use within the main project.
 
-Dependencies ensure that resources are provisioned in the right order within the networking module. The Azure Resource Group (RG) is the parent resource,  whereas the Virtual Network (VNet) depends on the RG for deployment location. As the Control Plane and Worker Node Subnets are sub-resources they depend on the VNet. The Network Security Group (NSG) relies on the RG for deployment location and implicitly on the creation of subnets within the VNet. The NSG's presence is a requirement for NSG Inbound Rules. These requirements guarantee consecutive provisioning, which is necessary for the AKS cluster's networking services to be configured correctly.
+__*Dependencies*__ ensure that resources are provisioned in the right order within the networking module. The Azure Resource Group (RG) is the parent resource,  whereas the Virtual Network (VNet) depends on the RG for deployment location. As both the Control Plane and Worker Node Subnets are sub-resources they depend on the VNet. The Network Security Group (NSG) relies on the RG for deployment location and implicitly on the creation of subnets within the VNet. The NSG's presence is a requirement for NSG Inbound Rules. These requirements guarantee consecutive provisioning, which is necessary for the AKS cluster's networking services to be configured correctly.
+
+## Provisioning an Azure Kubernetes Service (AKS) cluster with IaC.
+
+The process involves defining input and output variables, configuring Azure resources, and initializing the cluster module for use within the main project.<br />
+
+**Define Input Variables**: 
+1. Create *variables.tf* file in the cluster module directory. 
+1. Define input variables for AKS cluster customization, including name, location, DNS prefix, Kubernetes version, service principal ID and secret. 
+1. Make sure to include the output variables from the networking module as the networking module plays an important role in establishing the networking resources for the AKS cluster. 
+1. Ensure a unique Service Principal name is used to prevent permission conflicts.<br />
+
+**Configure Azure Resources**:
+1. Create *main.tf* file, use input variables to set up AKS cluster resources such as name, location, DNS prefix, and Kubernetes version.
+1. Define default node pool settings, including node count, VM size, and auto-scaling parameters.
+1. Specify service principal authentication details.<br />
+
+
+**Define Output Variables**: Create *outputs.tf* file to define output variables storing cluster name, ID, and Kubernetes configuration file.<br />
+
+**Initialize Cluster Module**: Navigate to the aks-cluster-module directory and initialize for use within the main project.<br />
+
+Following these steps ensures automated provisioning of an AKS cluster using Terraform, promoting consistency and reproducibility in infrastructure deployment.
+
 
 
 ## Contributors 
