@@ -179,6 +179,45 @@ The process involves defining input and output variables, configuring Azure reso
 Following these steps ensures automated provisioning of an AKS cluster using Terraform, promoting consistency and reproducibility in infrastructure deployment.
 
 
+## Creating AKS Cluster With IaC
+
+To efficiently provision an AKS cluster using Terraform and seamlessly integrate previously defined modules, follow the comprehensive steps outlined below:
+
+### Authentication Setup
+1. **Create Service Principal**: Begin by creating a Service Principal (a dedicated service account used by Terraform to interact with Azure resources securely).
+2. **Define Input Variables**: In the `variables.tf` file, define input variables for the `client_id` and `client_secret`. These variables will store the credentials required for authenticating Terraform with Azure. Mark these variables as sensitive to prevent accidental exposure of sensitive information.
+
+### Provider Configuration
+1. **Create Main Configuration File**: In the `aks-terraform` directory, create a `main.tf` file.
+2. **Azure Provider Block**: Within `main.tf`, define the Azure provider block to enable authentication with Azure using the service principal credentials variables created previously. Include the required provider configuration details such as `subscription_id` and `tenant_id`.
+
+### Integration of Networking Module
+1. **Include Networking Module**: Integrate the networking module into the main configuration file (`main.tf`).
+2. **Define Input Variables**: Set the input variables required by the networking module:
+   - `resource_group_name`: A descriptive name for the Azure Resource Group.
+   - `location`: The Azure region where resources will be deployed.
+   - `vnet_address_space`: The address space for the Virtual Network (VNet) in CIDR notation.
+
+### Integration of Cluster Module
+1. **Include Cluster Module**: Integrate the cluster module into the main configuration file.
+2. **Define Input Variables**: Specify the input variables required by the cluster module:
+   - `aks_cluster_name`: The desired name for the AKS cluster.
+   - `cluster_location`: The Azure region where the AKS cluster will be created.
+   - `dns_prefix`: The DNS prefix for the AKS cluster, used to create a unique DNS name.
+   - `kubernetes_version`: The version of Kubernetes to be used for the AKS cluster.
+   - `service_principal_client_id` and `service_principal_secret`: The credentials of the service principal used for AKS cluster authentication.
+   - Use output variables from the networking module (`resource_group_name`, `vnet_id`, `control_plane_subnet_id`, `worker_node_subnet_id`, `aks_nsg_id`) as input variables for the cluster module.
+
+### Terraform Initialization and Application
+1. **Initialize Terraform Project**: Navigate to the main project directory and initialize the Terraform project.
+2. **Apply Terraform Configuration**: Apply the Terraform configuration to initiate the creation of networking resources and the AKS cluster. Ensure to add the resultant state file to `.gitignore` to avoid exposing sensitive information.
+
+### Retrieve Kubeconfig and Test Cluster
+1. **Retrieve Kubeconfig**: After AKS cluster provisioning, retrieve the kubeconfig file to securely connect to the cluster.
+2. **Test Cluster**: Connect to the newly created cluster using the kubeconfig file to verify successful provisioning and operational status.
+
+By following these steps, you can effectively automate the provisioning of an AKS cluster with Terraform, ensuring reliability and consistency in infrastructure deployment.
+
 
 ## Contributors 
 
