@@ -1,5 +1,5 @@
 # 1. Azure Resource Group
-# Azure Resource Group: Name this resource by referencing the resource_group_name variable created earlier
+# Azure Resource Group reference the resource_group_name variable created earlier
 
 resource "azurerm_resource_group" "aks_networking" {
   name = var.resource_group_name
@@ -7,7 +7,7 @@ resource "azurerm_resource_group" "aks_networking" {
 }
 
 # 2. A VNet
-# Name the Virtual Network (VNet): aks-vnet
+# Name the Virtual Network (VNet) 
 
 resource "azurerm_virtual_network" "aks-vnet" {
   name                = "aks-vnet"
@@ -17,7 +17,7 @@ resource "azurerm_virtual_network" "aks-vnet" {
 }
 
 # 3. Two subnets (for the control plane and worker nodes) 
-# Name the Control Plane Subnet: control-plane-subnet
+# Name the Control Plane Subnet
 
 resource "azurerm_subnet" "control-plane-subnet" {
   name                 = "control-plane-subnet"
@@ -27,7 +27,7 @@ resource "azurerm_subnet" "control-plane-subnet" {
 }
 
 
-# Name the Worker Node Subnet: worker-node-subnet
+# Name the Worker Node Subnet
   
 resource "azurerm_subnet" "worker-node-subnet" {
   name                 = "worker-node-subnet"
@@ -37,7 +37,7 @@ resource "azurerm_subnet" "worker-node-subnet" {
 }
 
 # 4. Network Security Group (NSG).
-# Name the Network Security Group (NSG): aks-nsg
+# Name the Network Security Group (NSG)
 
 resource "azurerm_network_security_group" "aks-nsg" {
   name                = "aks-nsg"
