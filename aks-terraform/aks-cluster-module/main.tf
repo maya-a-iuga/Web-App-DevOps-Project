@@ -16,7 +16,7 @@ resource "azurerm_kubernetes_cluster" "aks_cluster" {
     max_count = 3
   }
 
-  service_principal {
+ service_principal {
     client_id     = var.service_principal_client_id
     client_secret = var.service_principal_secret
   }
