@@ -218,6 +218,39 @@ To efficiently provision an AKS cluster using Terraform and seamlessly integrate
 
 By following these steps, you can effectively automate the provisioning of an AKS cluster with Terraform, ensuring reliability and consistency in infrastructure deployment.
 
+## Kubernetes Deployment to AKS
+
+### Deployment and Service Manifests
+Deploy the containerized application to a Kubernetes cluster, using Deployment and Service manifests. These manifests are defined as follows:
+- **Deployment Manifest**: Create a file named `application-manifest.yaml` to define the Deployment resource. Key configurations include:
+  - `replicas`: Specifies the desired number of pods to run, ensuring scalability and high availability.
+  - `selector`: Identifies the pods managed by the Deployment using labels.
+  - `containers`: Defines the container image and exposes port 5000 for communication.
+  - `strategy`: Implements Rolling Updates to ensure smooth application updates with minimal downtime.
+- **Service Manifest**: Within the same `application-manifest.yaml`, define a Service to facilitate internal communication. Configurations include:
+  - `selector`: Matches labels of pods created by the Deployment for efficient traffic routing.
+  - `ports`: Specifies TCP protocol on port 80 for internal communication within the cluster, targeting port 5000 of the container.
+  - `type`: Set to ClusterIP for internal service within the AKS cluster.
+
+## Deployment Strategy
+Rolling Updates is utilised as the deployment strategy for its benefits:
+- **Gradual Replacement**: Old instances are replaced one at a time for a smooth transition.
+- **Continuous Availability**: The application remains accessible to users throughout the update.
+- **Controlled Rollout**: Operators can control the update rate and monitor progress.
+- **Built-in Health Checks**: Kubernetes ensures new instances are healthy before proceeding with the update.
+
+## Testing and Validation
+After deployment, we validate the application's functionality and reliability through testing:
+- **Verification**: Confirm the status and details of deployed pods and services.
+- **Port Forwarding**: Initiate port forwarding to a local machine for efficient testing.
+- **Local Access**: Access the application locally at http://127.0.0.1:5000.
+- **Functional Testing**: Test all application features, such as the orders table and Add Order functionality.
+
+## Distribution to Internal Users
+To distribute the application company-wide, consider using Ingress. Ingress controllers allow you to manage more advance routing, domain-based access, and can be a powerful way to manage both internal and external traffic. However, setting up an Ingress involves provisioning a company domain, which can be a complex and costly process and so it is beyond the scope of this project.
+On the other hand, if the application was customer-facing rather than for internal use, using a Load Balancer service would be the preferred choice. This setup is especially suitable when serving the application to a broader audience, such as a public website or a customer portal.
+
+
 
 ## Contributors 
 
