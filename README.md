@@ -133,7 +133,7 @@ The delivery date feature enhances the company's internal application by allowin
 
 **Docker Commands**
 1.	First build the Docker image by running the following command: *docker build -t {name of the image} .*
-1.	Run a Docker container locally to ensure the application functions correctly within the containerized environment. Execute the following command: *docker run -p 5000:5000 {name of the image}*. This maps port 5000 from your local machine to the container, enabling access to the containerized application through the web browser at *http://127.0.0.1:5000*.
+1.	Run a Docker container locally to ensure the application functions correctly within the containerised environment. Execute the following command: *docker run -p 5000:5000 {name of the image}*. This maps port 5000 from your local machine to the container, enabling access to the containerised application through the web browser at *http://127.0.0.1:5000*.
 1.	Tag your Docker image with the relevant information. Specify the image name, version, and Docker Hub repository in the following format: *docker tag {name of the image} {docker-hub-username}/{image-name}:{tag}*
 1.	Login into your Docker Hub account and use the docker push command to upload the Docker image to Docker Hub: *docker push {docker-hub-username}/{image-name}:{tag}*
 1.	Log in to your Docker Hub account and confirm that your Docker image is listed within your repository. You can test pulling the image from Docker Hub to ensure that it's accessible.
@@ -145,24 +145,24 @@ Name: liban45/test-web-app
 Tags: v1
 
 ## Defining Networking Services With IaC.
-This documentation outlines the process of defining networking services using Infrastructure as Code (IaC) with Terraform. This is done to deploy a containerized application on a Kubernetes cluster (to ensure the application's scalability). The focus will be on provisioning Azure networking services for the Azure Kubernetes Service (AKS) cluster. We will detail the steps for defining and provisioning the networking module.
+This documentation outlines the process of defining networking services using Infrastructure as Code (IaC) with Terraform. This is done to deploy a containerised application on a Kubernetes cluster (to ensure the application's scalability). The focus will be on provisioning Azure networking services for the Azure Kubernetes Service (AKS) cluster. We will detail the steps for defining and provisioning the networking module.
 
-1. **Initialize your Terraform project** with the name *aks-terraform*. Organize the project into two modules: *networking-module* and *aks-cluster-module*.
+1. **Initialize your Terraform project** with the name *aks-terraform*. Organise the project into two modules: *networking-module* and *aks-cluster-module*.
 1. **Define input variables**: inside the *networking-module* directory, create a *variables.tf* file to define input variables for the module. These variables include resource_group_name, location, and vnet_address_space.
 1. **Define Networking Resources**: In the *networking-module* directory, create a *main.tf* file to define essential networking resources. These resources include Azure Resource Group, Virtual Network (VNet), Control Plane Subnet, Worker Node Subnet, and Network Security Group (NSG).
 1. **Define NSG Inbound Rules**: Add rules to the Network Security Group (NSG) to allow traffic to kube-apiserver and SSH from your public IP address. These rules are crucial for the successful provisioning of the AKS cluster and ensuring its security.
 1. **Define Output Variables**: Create an *outputs.tf* file to define output variables for the networking module. These variables include vnet_id, control_plane_subnet_id, worker_node_subnet_id, networking_resource_group_name, and aks_nsg_id.
-1.**Initialize the Networking Module**: In the *networking-module* run the terraform initialization command. This initializes the networking module, making it ready for use within the main project.
+1.**Initialize the Networking Module**: In the *networking-module* run the terraform initialization command. This initialises the networking module, making it ready for use within the main project.
 
 __*Dependencies*__ ensure that resources are provisioned in the right order within the networking module. The Azure Resource Group (RG) is the parent resource,  whereas the Virtual Network (VNet) depends on the RG for deployment location. As both the Control Plane and Worker Node Subnets are sub-resources they depend on the VNet. The Network Security Group (NSG) relies on the RG for deployment location and implicitly on the creation of subnets within the VNet. The NSG's presence is a requirement for NSG Inbound Rules. These requirements guarantee consecutive provisioning, which is necessary for the AKS cluster's networking services to be configured correctly.
 
 ## Provisioning an Azure Kubernetes Service (AKS) cluster with IaC.
 
-The process involves defining input and output variables, configuring Azure resources, and initializing the cluster module for use within the main project.<br />
+The process involves defining input and output variables, configuring Azure resources, and initialising the cluster module for use within the main project.<br />
 
 **Define Input Variables**: 
 1. Create *variables.tf* file in the cluster module directory. 
-1. Define input variables for AKS cluster customization, including name, location, DNS prefix, Kubernetes version, service principal ID and secret. 
+1. Define input variables for AKS cluster customisation, including name, location, DNS prefix, Kubernetes version, service principal ID and secret. 
 1. Make sure to include the output variables from the networking module as the networking module plays an important role in establishing the networking resources for the AKS cluster. 
 1. Ensure a unique Service Principal name is used to prevent permission conflicts.<br />
 
@@ -221,7 +221,7 @@ By following these steps, you can effectively automate the provisioning of an AK
 ## Kubernetes Deployment to AKS
 
 ### Deployment and Service Manifests
-Deploy the containerized application to a Kubernetes cluster, using Deployment and Service manifests. These manifests are defined as follows:
+Deploy the containerised application to a Kubernetes cluster, using Deployment and Service manifests. These manifests are defined as follows:
 - **Deployment Manifest**: Create a file named `application-manifest.yaml` to define the Deployment resource. Key configurations include:
   - `replicas`: Specifies the desired number of pods to run, ensuring scalability and high availability.
   - `selector`: Identifies the pods managed by the Deployment using labels.
@@ -232,21 +232,21 @@ Deploy the containerized application to a Kubernetes cluster, using Deployment a
   - `ports`: Specifies TCP protocol on port 80 for internal communication within the cluster, targeting port 5000 of the container.
   - `type`: Set to ClusterIP for internal service within the AKS cluster.
 
-## Deployment Strategy
+### Deployment Strategy
 Rolling Updates is utilised as the deployment strategy for its benefits:
 - **Gradual Replacement**: Old instances are replaced one at a time for a smooth transition.
 - **Continuous Availability**: The application remains accessible to users throughout the update.
 - **Controlled Rollout**: Operators can control the update rate and monitor progress.
 - **Built-in Health Checks**: Kubernetes ensures new instances are healthy before proceeding with the update.
 
-## Testing and Validation
+### Testing and Validation
 After deployment, we validate the application's functionality and reliability through testing:
 - **Verification**: Confirm the status and details of deployed pods and services.
 - **Port Forwarding**: Initiate port forwarding to a local machine for efficient testing.
 - **Local Access**: Access the application locally at http://127.0.0.1:5000.
 - **Functional Testing**: Test all application features, such as the orders table and Add Order functionality.
 
-## Distribution to Internal Users
+### Distribution to Internal Users
 To distribute the application company-wide, consider using Ingress. Ingress controllers allow you to manage more advance routing, domain-based access, and can be a powerful way to manage both internal and external traffic. However, setting up an Ingress involves provisioning a company domain, which can be a complex and costly process and so it is beyond the scope of this project.
 On the other hand, if the application was customer-facing rather than for internal use, using a Load Balancer service would be the preferred choice. This setup is especially suitable when serving the application to a broader audience, such as a public website or a customer portal.
 
