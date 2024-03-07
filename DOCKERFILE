@@ -2,13 +2,12 @@
 # Use a base image
 FROM python:3.8-slim
 
+# Copy files from the host to the image
+COPY . . 
 
 # Run commands to install dependencies or configure the image
 RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
-
-# Copy files from the host to the image
-COPY . . 
 
 # Specify the default command when a container starts
 CMD ["python", "app.py"]
