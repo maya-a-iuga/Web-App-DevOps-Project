@@ -2,7 +2,9 @@
 # Use a base image
 FROM python:3.8-slim
 
+
 # Run commands to install dependencies or configure the image
+RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
 
 # Copy files from the host to the image
