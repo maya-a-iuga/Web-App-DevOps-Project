@@ -13,5 +13,5 @@ steps:
     containerRegistry: 'Docker Hub'
     repository: 'liban45/test-web-app'
     command: 'buildAndPush'
-    Dockerfile: '**/Dockerfile'
+    Dockerfile: '**/DOCKERFILE'
     tags: 'latest'
