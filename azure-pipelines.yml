@@ -4,7 +4,7 @@
 # https://aka.ms/yaml
 
 trigger:
-- main
+- feature-151
 
 pool:
   vmImage: ubuntu-latest
@@ -13,7 +13,7 @@ steps:
 - task: Docker@2
   inputs:
     containerRegistry: 'Docker Hub'
-    repository: 'mayaaiuga/devops-web-app'
+    repository: 'mayaaiuga/flask-app-test'
     command: 'buildAndPush'
     Dockerfile: '**/Dockerfile'
     tags: 'latest'
