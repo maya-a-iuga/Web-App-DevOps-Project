@@ -15,31 +15,31 @@ app = Flask(__name__)
 
 # database connection 
 # Replace these values with your Key Vault details
-key_vault_url = "https://test-key-vault-maya.vault.azure.net/"
+#key_vault_url = "https://test-key-vault-maya.vault.azure.net/"
 
 
 # Set up Azure Key Vault client
 #credential = DefaultAzureCredential()
-credential = ManagedIdentityCredential()
-secret_client = SecretClient(vault_url=key_vault_url, credential=credential)
+#credential = ManagedIdentityCredential()
+#secret_client = SecretClient(vault_url=key_vault_url, credential=credential)
 
 
-server_name_secret = secret_client.get_secret("server-name-secret")
-server_username_secret = secret_client.get_secret("server-username-secret")
-server_password_secret = secret_client.get_secret("server-password-secret")
-database_name_secret = secret_client.get_secret("database-name-secret")
+#server_name_secret = secret_client.get_secret("server-name-secret")
+#server_username_secret = secret_client.get_secret("server-username-secret")
+#server_password_secret = secret_client.get_secret("server-password-secret")
+#database_name_secret = secret_client.get_secret("database-name-secret")
 
 
 # Access the secret values
-server = server_name_secret.value
-username = server_username_secret.value
-password = server_password_secret.value
-database = database_name_secret.value
+#server = server_name_secret.value
+#username = server_username_secret.value
+#password = server_password_secret.value
+#database = database_name_secret.value
 
-#server = 'devops-project-server.database.windows.net'
-#database = 'orders-db'
-#username = 'maya'
-#password = 'AiCore1237'
+server = 'devops-project-server.database.windows.net'
+database = 'orders-db'
+username = 'maya'
+password = 'AiCore1237'
 driver= '{ODBC Driver 18 for SQL Server}'
 
 # Create the connection string
@@ -81,19 +81,24 @@ def display_orders():
     page = int(request.args.get('page', 1))
     rows_per_page = 25
 
-    # Calculate the start and end indices for the current page
-    start_index = (page - 1) * rows_per_page
-    end_index = start_index + rows_per_page
-
     # Create a session to interact with the database
     session = Session()
 
-    # Fetch a subset of data for the current page
-    current_page_orders = session.query(Order).order_by(Order.user_id, Order.date_uuid).slice(start_index, end_index).all()
+    # Calculate the total number of rows
+    total_rows = session.query(Order).count()
 
     # Calculate the total number of pages
-    total_rows = session.query(Order).count()
     total_pages = (total_rows + rows_per_page - 1) // rows_per_page
+
+    # Ensure page number is within valid range
+    page = min(max(page, 1), total_pages)
+
+    # Calculate start and end indices for the current page
+    start_index = (page - 1) * rows_per_page
+    end_index = min(start_index + rows_per_page, total_rows)
+
+    # Fetch orders for the current page
+    current_page_orders = session.query(Order).order_by(Order.user_id, Order.date_uuid).slice(start_index, end_index).all()
 
     # Close the session
     session.close()

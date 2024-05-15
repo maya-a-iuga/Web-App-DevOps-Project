@@ -25,7 +25,7 @@ spec:
     spec:
       containers:
       - name: flask-app-container
-        image: mayaaiuga/flask-app-sercrets:latest 
+        image: mayaaiuga/flask-app-test:latest 
         ports:
         - containerPort: 5000  # Expose the same port specified in your Dockerfile
         #env:
