@@ -12,7 +12,7 @@ pool:
 steps:
 - task: Docker@2
   inputs:
-    containerRegistry: 'Docker Hub'
+    containerRegistry: 'dockerhub'
     repository: 'mayaaiuga/flask-app-test'
     command: 'buildAndPush'
     Dockerfile: '**/Dockerfile'
@@ -22,7 +22,7 @@ steps:
   inputs:
     action: 'deploy'
     connectionType: 'azureResourceManager'
-    azureSubscriptionConnection: 'AKS connection'
+    azureSubscriptionConnection: 'aks-connection'
     azureResourceGroup: 'example-terraform-rg'
     kubernetesCluster: 'example-aks-cluster'
     manifests: 'deployment.yaml'
