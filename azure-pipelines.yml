@@ -4,7 +4,7 @@
 # https://aka.ms/yaml
 
 trigger:
-- main
+- feature-151
 
 pool:
   vmImage: ubuntu-latest
@@ -12,8 +12,17 @@ pool:
 steps:
 - task: Docker@2
   inputs:
-    containerRegistry: 'Docker Hub'
-    repository: 'mayaaiuga/devops-web-app'
+    containerRegistry: 'dockerhub'
+    repository: 'mayaaiuga/flask-app-test'
     command: 'buildAndPush'
     Dockerfile: '**/Dockerfile'
     tags: 'latest'
+
+- task: KubernetesManifest@1
+  inputs:
+    action: 'deploy'
+    connectionType: 'azureResourceManager'
+    azureSubscriptionConnection: 'aks-connection'
+    azureResourceGroup: '6e910da7-terraform-rg'
+    kubernetesCluster: '6e910da7-aks-cluster'
+    manifests: 'deployment.yaml'
