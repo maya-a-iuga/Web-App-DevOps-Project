@@ -9,7 +9,7 @@ import os
 # Initialise Flask App
 app = Flask(__name__)
 
-# database connection 
+# database connection
 server = 'devops-project-server.database.windows.net'
 database = 'orders-db'
 username = 'maya'
@@ -39,6 +39,7 @@ Base = declarative_base()
 class Order(Base):
     __tablename__ = 'orders'
     date_uuid = Column('date_uuid', String, primary_key=True)
+    delivery_date = column('Delivery Date', DateTime)
     user_id = Column('User ID', String, primary_key=True)
     card_number = Column('Card Number', String)
     store_code = Column('Store Code', String)
@@ -78,6 +79,7 @@ def display_orders():
 @app.route('/add_order', methods=['POST'])
 def add_order():
     date_uuid = request.form.get('date_uuid')
+    delivery_date = request.form['delivery_date']
     user_id = request.form.get('user_id')
     card_number = request.form.get('card_number')
     store_code = request.form.get('store_code')
@@ -85,7 +87,9 @@ def add_order():
     product_quantity = request.form.get('product_quantity')
     order_date = request.form.get('order_date')
     shipping_date = request.form.get('shipping_date')
-    
+   
+
+
     # Create a session to interact with the database
     session = Session()
 
@@ -98,7 +102,8 @@ def add_order():
         product_code=product_code,
         product_quantity=product_quantity,
         order_date=order_date,
-        shipping_date=shipping_date
+        shipping_date=shipping_date,
+        delivery_date=delivery_date
     )
 
     # Add the new order to the session and commit to the database
