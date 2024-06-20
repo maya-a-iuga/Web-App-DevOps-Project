@@ -13,15 +13,15 @@ Welcome to the Web App DevOps Project repo! This application allows you to effic
 ## Features
 
 - **Order List:** View a comprehensive list of orders including details like date UUID, user ID, card number, store code, product code, product quantity, order date, and shipping date.
-  
+
 ![Screenshot 2023-08-31 at 15 48 48](https://github.com/maya-a-iuga/Web-App-DevOps-Project/assets/104773240/3a3bae88-9224-4755-bf62-567beb7bf692)
 
 - **Pagination:** Easily navigate through multiple pages of orders using the built-in pagination feature.
-  
+
 ![Screenshot 2023-08-31 at 15 49 08](https://github.com/maya-a-iuga/Web-App-DevOps-Project/assets/104773240/d92a045d-b568-4695-b2b9-986874b4ed5a)
 
 - **Add New Order:** Fill out a user-friendly form to add new orders to the system with necessary information.
-  
+
 ![Screenshot 2023-08-31 at 15 49 26](https://github.com/maya-a-iuga/Web-App-DevOps-Project/assets/104773240/83236d79-6212-4fc3-afa3-3cee88354b1a)
 
 - **Data Validation:** Ensure data accuracy and completeness with required fields, date restrictions, and card number validation.
@@ -53,10 +53,72 @@ To run the application, you simply need to run the `app.py` script in this repos
 
 - **Database:** The application employs an Azure SQL Database as its database system to store order-related data.
 
-## Contributors 
+## Contributors
 
-- [Maya Iuga]([https://github.com/yourusername](https://github.com/maya-a-iuga))
+- [Maya Iuga](<[https://github.com/yourusername](https://github.com/maya-a-iuga)>)
 
 ## License
 
 This project is licensed under the MIT License. For more details, refer to the [LICENSE](LICENSE) file.
+
+## Robin Winters Azure End-to-End DevOps Pipeline Project
+
+1. _delivery-date column:_ delivery_date added to both backend (app.py) and frontend (order.html) files.
+2. _removed delivery-date column:_ delivery_date removed from both backend (app.py) and frontend (order.html) files.
+
+### Containerization
+
+1. Dockerfile created based on python:3.8-slim
+2. Docker image builded.
+   **imagename:** web-app-image
+   **imagetag:** 1.0
+3. Image pushed to Docker Hub
+
+- Image can be seen from the link below
+- https://hub.docker.com/repository/docker/robinwinters/web-app-image/general
+
+### Networking Services Deployment with Terraform
+
+#### Overview
+
+This repository contains Terraform configurations for deploying networking resources in Azure, including a Virtual Network (VNet), subnets, and Network Security Groups (NSGs). This README provides an overview of the networking services deployed using Infrastructure as Code (IaC) with Terraform.
+
+#### Prerequisites
+
+Before running the Terraform configurations, ensure you have the following prerequisites set up:
+
+Azure subscription
+Azure CLI installed and configured
+Terraform CLI installed
+
+#### Terraform Configuration
+
+1. Input Variables
+
+   - resource_group_name: The name of the Azure resource group where networking resources will be created.
+   - location: The Azure region where networking resources will be deployed.
+   - vnet_address_space: The address space for the Virtual Network (VNet).
+
+2. Networking Resources
+
+   - Azure Resource Group
+   - Virtual Network (VNet)
+   - Subnets
+   - Network Security Group (NSG)
+
+3. Output Variables
+   - vnet_id: ID of the Virtual Network (VNet).
+   - control_plane_subnet_id: ID of the control plane subnet.
+   - worker_node_subnet_id: ID of the worker node subnet.
+   - resource_group_name: Name of the Azure Resource Group for networking resources.
+   - aks_nsg_id: ID of the Network Security Group (NSG) for AKS.
+
+#### Usage
+
+1. Clone Repository: Clone this repository to your local machine.
+2. Set Terraform Variables: Update the variables.tf file with your desired values for input variables.
+3. Initialize Terraform: Run terraform init to initialize the Terraform configuration.
+4. Review Execution Plan: Run terraform plan to review the execution plan and ensure it matches your expectations.
+5. Apply Terraform Changes: Run terraform apply to apply the Terraform changes and deploy networking resources to Azure.
+
+- \*\*git can only support files of a certain size & that the .terraform is larger so has to be avoided
