@@ -170,5 +170,21 @@ input[type="submit"] {
     margin-bottom: 10px;
 }
 
+/* Adjust the width and padding for consistency */
+select,
+input[type="date"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+/* Style for error message */
+.field-error {
+    color: red;
+    font-size: 14px;
+}
 
 
