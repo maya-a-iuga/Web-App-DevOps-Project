@@ -18,22 +18,6 @@ steps:
     Dockerfile: '**/Dockerfile'
     tags: 'latest'
 
-- script: |
-    # Create the secrets.yaml file
-    cat <<EOF > secrets.yaml
-    apiVersion: v1
-    kind: Secret
-    metadata:
-      name: mysecret
-    type: Opaque
-    data:
-      db-server: $(echo -n $(DB_SERVER) | base64)
-      db-database: $(echo -n $(DB_DATABASE) | base64)
-      db-username: $(echo -n $(DB_USERNAME) | base64)
-      db-password: $(echo -n $(DB_PASSWORD) | base64)
-    EOF
-  displayName: 'Create Kubernetes Secrets YAML'
-
 - task: KubernetesManifest@1
   inputs:
     action: 'deploy'
@@ -41,7 +25,5 @@ steps:
     azureSubscriptionConnection: 'aks-connection'
     azureResourceGroup: '9b5daa2d-terraform-rg'
     kubernetesCluster: '9b5daa2d-aks-cluster'
-    manifests: |
-      secrets.yaml
-      deployment.yaml
+    manifests: 'deployment.yaml'
       
