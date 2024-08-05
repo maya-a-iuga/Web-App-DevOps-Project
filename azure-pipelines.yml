@@ -9,12 +9,6 @@ trigger:
 pool:
   vmImage: ubuntu-latest
 
-variables:
-  DB_SERVER: $(DB_SERVER)
-  DB_DATABASE: $(DB_DATABASE)
-  DB_USERNAME: $(DB_USERNAME)
-  DB_PASSWORD: $(DB_PASSWORD)
-
 steps:
 - task: Docker@2
   inputs:
@@ -30,22 +24,28 @@ steps:
     scriptType: 'bash'
     scriptPath: ''
     script: |
-      echo "Encoding secrets and replacing placeholders in secrets.yaml..."
+      echo "Creating Kubernetes secrets..."
+      
+      # Export the pipeline secrets as environment variables
+      export DB_SERVER=$(DB_SERVER)
+      export DB_DATABASE=$(DB_DATABASE)
+      export DB_USERNAME=$(DB_USERNAME)
+      export DB_PASSWORD=$(DB_PASSWORD)
 
-      # Encode values
-      DB_SERVER_BASE64=$(echo -n $(DB_SERVER) | base64)
-      DB_DATABASE_BASE64=$(echo -n $(DB_DATABASE) | base64)
-      DB_USERNAME_BASE64=$(echo -n $(DB_USERNAME) | base64)
-      DB_PASSWORD_BASE64=$(echo -n $(DB_PASSWORD) | base64)
+      # Create the secret in Kubernetes
+      kubectl create secret generic flask-app-secrets \
+        --from-literal=db-server="$DB_SERVER" \
+        --from-literal=db-database="$DB_DATABASE" \
+        --from-literal=db-username="$DB_USERNAME" \
+        --from-literal=db-password="$DB_PASSWORD" \
+        --dry-run=client -o yaml | kubectl apply -f -
+  displayName: 'Create Kubernetes Secrets'
+  env:
+    DB_SERVER: $(DB_SERVER)
+    DB_DATABASE: $(DB_DATABASE)
+    DB_USERNAME: $(DB_USERNAME)
+    DB_PASSWORD: $(DB_PASSWORD)
 
-      # Replace placeholders
-      sed -i "s/\$(DB_SERVER_BASE64)/$DB_SERVER_BASE64/g" secrets.yaml
-      sed -i "s/\$(DB_DATABASE_BASE64)/$DB_DATABASE_BASE64/g" secrets.yaml
-      sed -i "s/\$(DB_USERNAME_BASE64)/$DB_USERNAME_BASE64/g" secrets.yaml
-      sed -i "s/\$(DB_PASSWORD_BASE64)/$DB_PASSWORD_BASE64/g" secrets.yaml
-
-      cat secrets.yaml
-  displayName: 'Replace Placeholders in secrets.yaml'
       
 - task: Kubernetes@1
   inputs:
@@ -54,5 +54,5 @@ steps:
     azureResourceGroup: '9b5daa2d-terraform-rg'
     kubernetesCluster: '9b5daa2d-aks-cluster'
     command: 'apply'
-    arguments: '-f secrets.yaml -f deployment.yaml'
-  displayName: 'Apply Secrets and Deployment'
+    arguments: '-f deployment.yaml'
+  displayName: 'Apply Deployment'
