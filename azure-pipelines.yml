@@ -34,13 +34,13 @@ steps:
     apiVersion: v1
     kind: Secret
     metadata:
-      name: mysecret
+      name: flask-app-secrets
     type: Opaque
     data:
-      db-server: $(DB_SERVER)
-      db-database: $(DB_DATABASE)
-      db-username: $(DB_USERNAME)
-      db-password: $(DB_PASSWORD)
+      db-server: $(echo -n $(DB_SERVER) | base64)
+      db-database: $(echo -n $(DB_DATABASE) | base64)
+      db-username: $(echo -n $(DB_USERNAME) | base64)
+      db-password: $(echo -n $(DB_PASSWORD) | base64)
     EOF
   displayName: 'Create Kubernetes Secrets YAML'
 
