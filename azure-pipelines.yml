@@ -27,3 +27,20 @@ steps:
     command: 'buildAndPush'
     Dockerfile: '**/Dockerfile'
     tags: 'latest'
+
+- script: |
+    # Create the secrets.yaml file
+    cat <<EOF > secrets.yaml
+    apiVersion: v1
+    kind: Secret
+    metadata:
+      name: mysecret
+    type: Opaque
+    data:
+      db-server: $(DB_SERVER)
+      db-database: $(DB_DATABASE)
+      db-username: $(DB_USERNAME)
+      db-password: $(DB_PASSWORD)
+    EOF
+  displayName: 'Create Kubernetes Secrets YAML'
+  
