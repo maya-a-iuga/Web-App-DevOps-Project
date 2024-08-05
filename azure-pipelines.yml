@@ -9,6 +9,12 @@ trigger:
 pool:
   vmImage: ubuntu-latest
 
+variables:
+  DB_SERVER: $(DB_SERVER)
+  DB_DATABASE: $(DB_DATABASE)
+  DB_USERNAME: $(DB_USERNAME)
+  DB_PASSWORD: $(DB_PASSWORD)
+
 steps:
 - task: Docker@2
   inputs:
@@ -17,12 +23,36 @@ steps:
     command: 'buildAndPush'
     Dockerfile: '**/Dockerfile'
     tags: 'latest'
-      
-- task: KubernetesManifest@1
+
+- task: Bash@3
   inputs:
-    action: 'deploy'
+    targetType: 'inline'
+    scriptType: 'bash'
+    scriptPath: ''
+    script: |
+      echo "Encoding secrets and replacing placeholders in secrets.yaml..."
+
+      # Encode values
+      DB_SERVER_BASE64=$(echo -n $(DB_SERVER) | base64)
+      DB_DATABASE_BASE64=$(echo -n $(DB_DATABASE) | base64)
+      DB_USERNAME_BASE64=$(echo -n $(DB_USERNAME) | base64)
+      DB_PASSWORD_BASE64=$(echo -n $(DB_PASSWORD) | base64)
+
+      # Replace placeholders
+      sed -i "s/\$(DB_SERVER_BASE64)/$DB_SERVER_BASE64/g" secrets.yaml
+      sed -i "s/\$(DB_DATABASE_BASE64)/$DB_DATABASE_BASE64/g" secrets.yaml
+      sed -i "s/\$(DB_USERNAME_BASE64)/$DB_USERNAME_BASE64/g" secrets.yaml
+      sed -i "s/\$(DB_PASSWORD_BASE64)/$DB_PASSWORD_BASE64/g" secrets.yaml
+
+      cat secrets.yaml
+  displayName: 'Replace Placeholders in secrets.yaml'
+      
+- task: Kubernetes@1
+  inputs:
     connectionType: 'azureResourceManager'
-    azureSubscriptionConnection: 'aks-connection'
+    azureSubscription: 'aks-connection'
     azureResourceGroup: '9b5daa2d-terraform-rg'
     kubernetesCluster: '9b5daa2d-aks-cluster'
-    manifests: 'deployment.yaml'
+    command: 'apply'
+    arguments: '-f secrets.yaml -f deployment.yaml'
+  displayName: 'Apply Secrets and Deployment'
