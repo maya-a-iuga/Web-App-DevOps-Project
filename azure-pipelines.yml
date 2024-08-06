@@ -16,7 +16,7 @@ variables:
 steps:
 - task: Docker@2
   inputs:
-    containerRegistry: 'Docker Hub'
+    containerRegistry: 'DockerHub'
     repository: 'mayaaiuga/azure-prov-test'
     command: 'buildAndPush'
     Dockerfile: '**/Dockerfile'
