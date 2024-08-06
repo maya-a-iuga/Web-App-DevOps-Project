@@ -29,6 +29,16 @@ steps:
     scriptType: 'bash'
     scriptLocation: 'inlineScript'
     inlineScript: |
+      # Install kubectl
+      az aks install-cli
+
+      # Get AKS credentials
+      az aks get-credentials --resource-group 9b5daa2d-terraform-rg --name 9b5daa2d-aks-cluster
+
+      # Verify kubectl context
+      kubectl config current-context
+      kubectl get nodes
+      
       # Create Kubernetes secret
       kubectl create secret generic flask-app-secrets \
         --from-literal=db-server=$(DB_SERVER) \
