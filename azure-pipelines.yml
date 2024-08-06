@@ -40,13 +40,11 @@ steps:
       # Apply the Kubernetes secret
       kubectl apply -f k8s-secret.yaml
 
-      
-- task: Kubernetes@1
+- task: KubernetesManifest@1
   inputs:
+    action: 'deploy'
     connectionType: 'azureResourceManager'
-    azureSubscription: 'aks-connection'
+    azureSubscriptionConnection: 'aks-connection'
     azureResourceGroup: '9b5daa2d-terraform-rg'
     kubernetesCluster: '9b5daa2d-aks-cluster'
-    command: 'apply'
-    arguments: '-f deployment.yaml'
-  displayName: 'Apply Deployment'
+    manifests: 'deployment.yaml'
