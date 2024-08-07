@@ -5,34 +5,20 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import create_engine
 import pyodbc
 import os
-from azure.keyvault.secrets import SecretClient
-from azure.identity import ManagedIdentityCredential
 
 # Initialise Flask App
 app = Flask(__name__)
 
-# database connection 
-# Replace these values with your Key Vault details
-key_vault_url = "https://keyvault-5076a581.vault.azure.net/"
-
-
-# Set up Azure Key Vault client
-credential = ManagedIdentityCredential()
-secret_client = SecretClient(vault_url=key_vault_url, credential=credential)
-
-
-server_name_secret = secret_client.get_secret("5076a581-server-name-secret")
-server_username_secret = secret_client.get_secret("5076a581-server-username-secret")
-server_password_secret = secret_client.get_secret("5076a581-server-password-secret")
-database_name_secret = secret_client.get_secret("5076a581-database-name-secret")
-
-
-# Access the secret values
-server = server_name_secret.value
-username = server_username_secret.value
-password = server_password_secret.value
-database = database_name_secret.value
+# Database connection using environment variables
+server = os.getenv('DB_SERVER')
+database = os.getenv('DB_DATABASE')
+username = os.getenv('DB_USERNAME')
+password = os.getenv('DB_PASSWORD')
 driver= '{ODBC Driver 18 for SQL Server}'
+
+# Ensure all required variables are set
+if not all([server, database, username, password, driver]):
+    raise ValueError("Database configuration is incomplete!")
 
 # Create the connection string
 connection_string=f'Driver={driver};\
