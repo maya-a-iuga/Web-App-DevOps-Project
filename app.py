@@ -13,7 +13,7 @@ app = Flask(__name__)
 
 # database connection 
 # Replace these values with your Key Vault details
-key_vault_url = "https://keyvault-6e910da7.vault.azure.net/"
+key_vault_url = "https://keyvault-5076a581.vault.azure.net/"
 
 
 # Set up Azure Key Vault client
