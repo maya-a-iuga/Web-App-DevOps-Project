@@ -46,6 +46,12 @@ steps:
       kubectl config current-context
       kubectl get nodes
       
+      # Retrieve secrets from Azure Key Vault
+      DB_SERVER=$(az keyvault secret show --name 5076a581-server-name-secret --vault-name $(keyVaultName) --query value -o tsv)
+      DB_USERNAME=$(az keyvault secret show --name 5076a581-server-username-secret --vault-name $(keyVaultName) --query value -o tsv)
+      DB_PASSWORD=$(az keyvault secret show --name 5076a581-server-password-secret --vault-name $(keyVaultName) --query value -o tsv)
+      DB_DATABASE=$(az keyvault secret show --name 5076a581-database-name-secret --vault-name $(keyVaultName) --query value -o tsv)
+      
       # Create Kubernetes secret
       kubectl create secret generic flask-app-secrets \
         --from-literal=db-server=$(DB_SERVER) \
