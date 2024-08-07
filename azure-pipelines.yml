@@ -24,7 +24,7 @@ steps:
 # Fetch secrets from Azure Key Vault
 - task: AzureKeyVault@2
   inputs:
-    azureSubscription: '582dc072-dad0-48f2-99ab-da7559376f84'
+    azureSubscription: 'aks-connection'
     KeyVaultName: '$(azureKeyVaultName)'
     SecretsFilter: '*'
     RunAsPreJob: true
