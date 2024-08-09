@@ -33,7 +33,7 @@ steps:
       az aks install-cli
 
       # Get AKS credentials
-      az aks get-credentials --resource-group 5442c391-terraform-rg --name 5442c391-aks-cluster
+      az aks get-credentials --resource-group 9aec175f-terraform-rg --name 9aec175f-aks-cluster
 
       # Verify kubectl context
       kubectl config current-context
@@ -55,6 +55,6 @@ steps:
     action: 'deploy'
     connectionType: 'azureResourceManager'
     azureSubscriptionConnection: 'aks-connection'
-    azureResourceGroup: '5442c391-terraform-rg'
-    kubernetesCluster: '5442c391-aks-cluster'
+    azureResourceGroup: '9aec175f-terraform-rg'
+    kubernetesCluster: '9aec175f-aks-cluster'
     manifests: 'deployment.yaml'
