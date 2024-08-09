@@ -41,7 +41,7 @@ Session = sessionmaker(bind=engine)
 Base = declarative_base()
 
 class Order(Base):
-    __tablename__ = 'orders-db'
+    __tablename__ = 'orders'
     date_uuid = Column('date_uuid', String, primary_key=True)
     user_id = Column('User ID', String, primary_key=True)
     card_number = Column('Card Number', String)
