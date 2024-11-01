@@ -10,10 +10,10 @@ import os
 app = Flask(__name__)
 
 # Database connection using environment variables
-server = os.getenv('DB_SERVER')
-database = os.getenv('DB_DATABASE')
-username = os.getenv('DB_USERNAME')
-password = os.getenv('DB_PASSWORD')
+server = os.getenv('aicore-devops-project-server.database.windows.net')
+database = os.getenv('orders-db')
+username = os.getenv('maya')
+password = os.getenv('AiCore1237')
 driver= '{ODBC Driver 18 for SQL Server}'
 
 # Ensure all required variables are set
@@ -50,6 +50,7 @@ class Order(Base):
     product_quantity = Column('Product Quantity', Integer)
     order_date = Column('Order Date', DateTime)
     shipping_date = Column('Shipping Date', DateTime)
+    delivery_date = Column('Delivery Date', DateTime)
 
 # define routes
 # route to display orders
@@ -89,6 +90,7 @@ def add_order():
     product_quantity = request.form.get('product_quantity')
     order_date = request.form.get('order_date')
     shipping_date = request.form.get('shipping_date')
+    delivery_date = request.form['delivery_date']
     
     # Create a session to interact with the database
     session = Session()
@@ -102,7 +104,8 @@ def add_order():
         product_code=product_code,
         product_quantity=product_quantity,
         order_date=order_date,
-        shipping_date=shipping_date
+        shipping_date=shipping_date,
+        delivery_date=delivery_date
     )
 
     # Add the new order to the session and commit to the database
