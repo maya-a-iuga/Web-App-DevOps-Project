@@ -57,26 +57,102 @@
         <div class="content" id="add-order-content" style="display: none;">
             <h2 class="tab-title">Add New Order</h2>
             <form method="post" action="/add_order">
-                <label for="date_uuid">Date UUID:</label>
-                <input type="text" id="date_uuid" name="date_uuid" required><br>
-                <label for="user_id">User ID:</label>
-                <input type="text" id="user_id" name="user_id" required><br>
-                <label for="card_number">Card Number:</label>
-                <input type="text" id="card_number" name="card_number" required><br>
-                <label for="store_code">Store Code:</label>
-                <input type="text" id="store_code" name="store_code" required><br>
-                <label for="product_code">Product Code:</label>
-                <input type="text" id="product_code" name="product_code" required><br>
-                <label for="product_quantity">Product Quantity:</label>
-                <input type="number" id="product_quantity" name="product_quantity" required><br>
-                <label for="order_date">Order Date:</label>
-                <input type="text" id="order_date" name="order_date" required><br>
-                <label for="shipping_date">Shipping Date:</label>
-                <input type="text" id="shipping_date" name="shipping_date" required><br>
+                <table>
+                    <tr>
+                        <td><label for="date_uuid">Date UUID:</label></td>
+                        <td>
+                            <select id="date_uuid" name="date_uuid" required>
+                                <option value="" disabled selected>Select Date UUID</option>
+                                {% for order in orders %}
+                                    <option value="{{ order.date_uuid }}">{{ order.date_uuid }}</option>
+                                {% endfor %}
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label for="user_id">User ID:</label></td>
+                        <td>
+                            <select id="user_id" name="user_id" required>
+                                <option value="" disabled selected>Select User ID</option>
+                                {% for order in orders %}
+                                    <option value="{{ order.user_id }}">{{ order.user_id }}</option>
+                                {% endfor %}
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label for="card_number">Card Number:</label></td>
+                        <td>
+                            <input type="text" id="card_number" name="card_number" required>
+                            <span class="field-error" id="card_number_error"></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label for="store_code">Store Code:</label></td>
+                        <td>
+                            <select id="store_code" name="store_code" required>
+                                <option value="" disabled selected>Select Store Code</option>
+                                {% for order in orders %}
+                                    <option value="{{ order.store_code }}">{{ order.store_code }}</option>
+                                {% endfor %}
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label for="product_code">Product Code:</label></td>
+                        <td>
+                            <select id="product_code" name="product_code" required>
+                                <option value="" disabled selected>Select Product Code</option>
+                                {% for order in orders %}
+                                    <option value="{{ order.product_code }}">{{ order.product_code }}</option>
+                                {% endfor %}
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label for="product_quantity">Product Quantity:</label></td>
+                        <td>
+                            <input type="number" id="product_quantity" name="product_quantity" required min="1">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label for="order_date">Order Date:</label></td>
+                        <td><input type="date" id="order_date" name="order_date" required></td>
+                    </tr>
+                    <tr>
+                        <td><label for="shipping_date">Shipping Date:</label></td>
+                        <td><input type="date" id="shipping_date" name="shipping_date" required></td>
+                    </tr>
+                </table>
                 <input type="submit" value="Add Order">
             </form>
         </div>
     </div>
     <script src="{{ url_for('static', filename='script.js') }}"></script>
+    <script>
+        const orderDateInput = document.getElementById('order_date');
+        const shippingDateInput = document.getElementById('shipping_date');
+        
+        orderDateInput.addEventListener('input', () => {
+            shippingDateInput.min = orderDateInput.value;
+            if (shippingDateInput.value < orderDateInput.value) {
+                shippingDateInput.value = orderDateInput.value;
+            }
+        });
+    </script>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+    <script>
+        const cardNumberInput = document.getElementById('card_number');
+        const cardNumberError = document.getElementById('card_number_error');
+        
+        cardNumberInput.addEventListener('input', () => {
+            const cardNumberValue = cardNumberInput.value;
+            if (cardNumberValue.length !== 15 && cardNumberValue.length !== 16) {
+                cardNumberError.textContent = "Enter a valid 15 or 16-digit card number.";
+            } else {
+                cardNumberError.textContent = "";
+            }
+        });
+    </script>
 </body>
 </html>
